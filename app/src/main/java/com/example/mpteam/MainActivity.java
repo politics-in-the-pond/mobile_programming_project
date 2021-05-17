@@ -1,4 +1,4 @@
-package com.example.firebaseloginproject;
+package com.example.mpteam;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -82,7 +82,5 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(new Intent(getApplicationContext(), LoginActivity.class));
                 break;
         }
-
-
     }
 }

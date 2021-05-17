@@ -1,15 +1,11 @@
-package com.example.firebaseloginproject;
+package com.example.mpteam;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
 import android.os.Handler;
-
-import java.util.logging.LogRecord;
 
 public class SplashActivity extends AppCompatActivity {
 

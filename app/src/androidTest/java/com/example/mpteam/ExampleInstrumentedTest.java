@@ -1,4 +1,4 @@
-package com.example.firebaseloginproject;
+package com.example.mpteam;
 
 import android.content.Context;
 
