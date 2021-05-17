@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "705048875560",
+    "project_id": "mpteam",
+    "storage_bucket": "mpteam.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:705048875560:android:3aa022952bd8de82ed5b1d",
+        "android_client_info": {
+          "package_name": "com.example.mpteam"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "705048875560-gh431c5h2lh4t7ccsjpa91uouui050mi.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.mpteam",
+            "certificate_hash": "cabdb94384cb782f1704df054647d175d187b68a"
+          }
+        },
+        {
+          "client_id": "705048875560-qqmbsjgj2kgni2tpsfo1glo7er9s0ukq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA9w3lSPn-iogXSWfz42ZOew1AL9b-UCp4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "705048875560-qqmbsjgj2kgni2tpsfo1glo7er9s0ukq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
