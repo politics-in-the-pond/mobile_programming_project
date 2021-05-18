@@ -46,6 +46,15 @@
         </LinearLayout>
         <include layout="@layout/sinppet_login_email_center" />
         <include layout="@layout/sinppet_login_password_center" />
+        <CheckBox
+            android:text="Log in automatically"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/password"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="14dp"
+            android:id="@+id/autoLoginCheck"
+            />
         <TextView
             android:id="@+id/textViewFindPassword"
             android:layout_width="wrap_content"

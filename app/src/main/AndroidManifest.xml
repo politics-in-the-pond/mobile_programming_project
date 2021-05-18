@@ -6,7 +6,9 @@
         android:usesCleartextTraffic="true"
         android:allowBackup="true"
         android:label="@string/app_name"
+        android:icon="@drawable/app_forest_symbol"
         android:supportsRtl="true"
+        android:roundIcon="@drawable/app_forest_symbol"
         android:theme="@style/AppTheme">
         <activity android:name="com.example.mpteam.LoginActivity"/>
         <activity android:name="com.example.mpteam.SignupActivity"/>
