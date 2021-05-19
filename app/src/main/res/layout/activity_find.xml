@@ -7,13 +7,13 @@
     tools:context=".FindActivity">
 
     <ImageView
+        android:id="@+id/findBackArrow"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_arrow_back"
         android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
         android:layout_marginTop="20dp"
-        android:id="@+id/findBackArrow"
-        android:layout_marginLeft="20dp" />
+        android:src="@drawable/ic_arrow_back" />
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -24,31 +24,31 @@
         tools:context=".FindActivity">
 
         <TextView
+            android:id="@+id/findPassword"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/opensans_bold"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="40dp"
             android:layout_marginBottom="5dp"
+            android:fontFamily="@font/opensans_bold"
             android:textColor="#191919"
             android:textSize="22sp"
-            tools:text="Find password"
-            android:id="@+id/findPassword"/>
+            tools:text="Find password" />
 
         <TextView
-            android:text="Please enter your registered email."
-            android:layout_gravity="center_horizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
             android:layout_margin="20dp"
-            android:textColor="#191919"/>
+            android:text="Please enter your registered email."
+            android:textColor="#191919" />
 
         <EditText
             android:id="@+id/editTextUserEmail"
             android:layout_width="250dp"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
             android:layout_gravity="center_horizontal"
+            android:layout_margin="10dp"
             android:hint="Enter email"
             android:inputType="textEmailAddress" />
 
@@ -64,11 +64,11 @@
             android:textColor="#FFFFFF" />
 
         <TextView
-            android:layout_gravity="center_horizontal"
-            android:textColor="@color/white"
             android:id="@+id/textviewSendMessage"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:textColor="@color/white" />
 
     </LinearLayout>
 </RelativeLayout>

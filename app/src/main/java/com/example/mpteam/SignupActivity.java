@@ -35,7 +35,7 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
     Button buttonSignup;
     ImageView buttonBack;
     TextView textviewMessage;
-    private TextView yourAccount,create;
+    private TextView yourAccount, create;
     ProgressDialog progressDialog;
     FirebaseAuth firebaseAuth;
 
@@ -70,7 +70,6 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
         buttonBack.setOnClickListener(this);
 
     }
-
 
 
     private void registerUser() {
@@ -112,8 +111,8 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
             return;
         }
 
-        if (!password.equals(confirmPassword)){
-            Toast.makeText(this,"Please check password again.",Toast.LENGTH_SHORT).show();
+        if (!password.equals(confirmPassword)) {
+            Toast.makeText(this, "Please check password again.", Toast.LENGTH_SHORT).show();
             editTextSignUpPassword.setText("");
             editTextSignUpPasswordConfirm.setText("");
             editTextSignUpPassword.requestFocus();

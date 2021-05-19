@@ -6,13 +6,16 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
+import com.example.mpteam.modules.AutoLoginProvider;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -29,6 +32,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     TextView textviewSignup;
     TextView textviewMessage;
     TextView textviewFindPassword;
+    CheckBox autoLogin;
+    AutoLoginProvider autoLoginProvider;
     private TextView tvLogin;
     private TextView tvToYourAccount;
     ProgressDialog progressDialog;
@@ -54,13 +59,22 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         textviewFindPassword = (TextView) findViewById(R.id.textViewFindPassword);
         tvLogin = (TextView) findViewById(R.id.tvLogin);
         tvToYourAccount = (TextView) findViewById(R.id.tvToYourAccount);
-
+        autoLogin = (CheckBox) findViewById(R.id.autoLoginCheck);
         buttonSignin = (Button) findViewById(R.id.buttonLogIn);
+        autoLoginProvider = new AutoLoginProvider();
         progressDialog = new ProgressDialog(this); //conncect Function
 
 
         tvLogin.setText("Log in");
         tvToYourAccount.setText(" to your Account");
+
+        ActivityCompat.requestPermissions(LoginActivity.this,
+                new String[]{"android.permission.INTERNET"}, 0);
+        ActivityCompat.requestPermissions(LoginActivity.this,
+                new String[]{"Manifest.permission.READ_EXTERNAL_STORAGE"}, MODE_PRIVATE);
+        ActivityCompat.requestPermissions(LoginActivity.this,
+                new String[]{"Manifest.permission.WRITE_EXTERNAL_STORAGE"}, MODE_PRIVATE);
+
 //        button click event
         buttonSignin.setOnClickListener(this);
         textviewSignup.setOnClickListener(this);
@@ -90,9 +104,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             Toast.makeText(this, "Please input password.", Toast.LENGTH_SHORT).show();
             return;
         }
-        if(!Pattern.matches("^(?=.*\\d)(?=.*[~`!@#$%\\^&*()-])(?=.*[a-zA-Z]).{8,20}$", password))
-        {
-            Toast.makeText(this,"Please keep the password format.",Toast.LENGTH_SHORT).show();
+        if (!Pattern.matches("^(?=.*\\d)(?=.*[~`!@#$%\\^&*()-])(?=.*[a-zA-Z]).{8,20}$", password)) {
+            Toast.makeText(this, "Please keep the password format.", Toast.LENGTH_SHORT).show();
             return;
         }
         progressDialog.setMessage("Logging in. wait a moment please...");
@@ -104,12 +117,17 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         progressDialog.dismiss();
-                            if (task.isSuccessful()) {
-                                finish();
+                        if (task.isSuccessful()) {
+                            if (autoLogin.isChecked()) {
+                                autoLoginProvider.AutoLoginWriter(email, password);
+                            } else {
+                                autoLoginProvider.AutoLoginRemover();
+                            }
+                            finish();
                             startActivity(new Intent(getApplicationContext(), MainActivity.class));
                         } else {
                             Toast.makeText(getApplicationContext(), "Login Failed! Please try again", Toast.LENGTH_LONG).show();
-                                textviewMessage.setText("Passwords must consist of numbers, alphabets, \nand special symbols.\nPassword must be \nat least 8 characters long\n");
+                            textviewMessage.setText("Passwords must consist of numbers, alphabets, \nand special symbols.\nPassword must be \nat least 8 characters long\n");
                         }
                     }
                 });

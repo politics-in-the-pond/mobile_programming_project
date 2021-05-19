@@ -15,21 +15,21 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener{
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-        private static final String TAG = "MainActivity";
+    private static final String TAG = "MainActivity";
 
-        private FirebaseAuth firebaseAuth;
+    private FirebaseAuth firebaseAuth;
 
-        Button memberWithdrawal,logOut;
-        ProgressDialog progressDialog;
+    Button memberWithdrawal, logOut;
+    ProgressDialog progressDialog;
 
-        @Override
-        protected void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        memberWithdrawal =(Button) findViewById(R.id.memberWithdrawal);
+        memberWithdrawal = (Button) findViewById(R.id.memberWithdrawal);
         logOut = (Button) findViewById(R.id.logOut);
         progressDialog = new ProgressDialog(this); //conncect Function
 
@@ -45,10 +45,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         logOut.setOnClickListener(this);
 
     }
-    private void Logout(){
+
+    private void Logout() {
 
     }
-    private void deleteUser(){
+
+    private void deleteUser() {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
         progressDialog.setMessage("Deleting User. please wait a moment please...");
@@ -62,8 +64,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     Toast.makeText(getApplicationContext(), "Your account has been deleted.", Toast.LENGTH_LONG).show();
                     finish();
                     startActivity(new Intent(getApplicationContext(), LoginActivity.class));
-                }else {
-                    Toast.makeText(getApplicationContext(),"Please try again",Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getApplicationContext(), "Please try again", Toast.LENGTH_SHORT).show();
                 }
             }
         });

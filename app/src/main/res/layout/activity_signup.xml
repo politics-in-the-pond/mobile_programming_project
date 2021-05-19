@@ -1,12 +1,11 @@
-
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_margin="30dp"
     android:orientation="vertical"
-    tools:context=".LoginActivity"
-    android:layout_margin="30dp">
+    tools:context=".LoginActivity">
+
     <ImageView
         android:id="@+id/buttonBack"
         android:layout_width="20dp"
@@ -23,17 +22,17 @@
 
 
         <ImageView
-            android:layout_marginTop="70dp"
             android:id="@+id/simbolAppForest"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_gravity="center_horizontal"
+            android:layout_marginTop="70dp"
             android:src="@drawable/app_forest_symbol" />
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_gravity="center_horizontal"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
             android:layout_marginTop="20dp"
             android:gravity="center_horizontal"
             android:orientation="horizontal">
@@ -66,7 +65,7 @@
 
         <include layout="@layout/sinppet_signup_password_confirm_center" />
 
-        <include layout="@layout/sinppet_signup_nickname_center"/>
+        <include layout="@layout/sinppet_signup_nickname_center" />
 
 
         <Button
