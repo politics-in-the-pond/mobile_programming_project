@@ -20,6 +20,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private static final String TAG = "MainActivity";
 
     private FirebaseAuth firebaseAuth;
+    private FirebaseUser firebaseUser;
 
     Button memberWithdrawal, logOut;
     ProgressDialog progressDialog;
@@ -35,15 +36,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         firebaseAuth = FirebaseAuth.getInstance();
 
-        if (firebaseAuth.getCurrentUser() == null) {
+        /*if (firebaseAuth.getCurrentUser() == null) {
             finish();
             startActivity(new Intent(this, LoginActivity.class));
         }
-        FirebaseUser user = firebaseAuth.getCurrentUser();
+        FirebaseUser user = firebaseAuth.getCurrentUser();*/
 
         memberWithdrawal.setOnClickListener(this);
         logOut.setOnClickListener(this);
 
+    }
+
+    @Override
+    protected void onResume() { //액티비티 화면이 띄워졌을 때 로그인 안되어있으면 로그인 액티비티 띄우기
+        super.onResume();
+        firebaseUser = firebaseAuth.getCurrentUser();
+        if (firebaseUser == null) {
+            startActivity(new Intent(this, LoginActivityResume.class));
+        }
     }
 
     private void Logout() {
@@ -51,12 +61,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void deleteUser() {
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
         progressDialog.setMessage("Deleting User. please wait a moment please...");
         progressDialog.show();
 
-        user.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+        firebaseUser.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
