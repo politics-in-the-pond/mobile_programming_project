@@ -15,11 +15,13 @@
         android:roundIcon="@drawable/app_forest_symbol"
         android:theme="@style/AppTheme">
         <activity android:name="com.example.mpteam.LoginActivity"/>
+        <activity android:name="com.example.mpteam.LoginActivityResume"/>
         <activity android:name="com.example.mpteam.SignupActivity"/>
         <activity android:name="com.example.mpteam.FindActivity" />
         <activity android:name="com.example.mpteam.MainActivity" />
         <activity
             android:name="com.example.mpteam.SplashActivity"
+            android:theme="@style/FullScreenTheme"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|adjustPan">
             <intent-filter>

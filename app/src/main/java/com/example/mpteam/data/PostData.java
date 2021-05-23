@@ -3,15 +3,16 @@ package com.example.mpteam.data;
 import java.util.ArrayList;
 
 public class PostData {
-    String postId, userId, title, content;
+    String postId, userId, title, content, dateTime;
     ArrayList<String> imageURL;
     int emotion; //0기쁨 1보통 2우울 3미묘 이런 형태로
 
-    public PostData(String postId, String userId, String title, String content, ArrayList<String> imageURL, int emotion) {
+    public PostData(String postId, String userId, String title, String content, String dateTime, ArrayList<String> imageURL, int emotion) {
         this.postId = postId;
         this.userId = userId;
         this.title = title;
         this.content = content;
+        this.dateTime = dateTime;
         this.imageURL = imageURL;
         this.emotion = emotion;
     }
@@ -42,6 +43,14 @@ public class PostData {
 
     public String getContent() {
         return content;
+    }
+
+    public String getDateTime() {
+        return dateTime;
+    }
+
+    public void setDateTime(String dateTime) {
+        this.dateTime = dateTime;
     }
 
     public void setContent(String content) {
