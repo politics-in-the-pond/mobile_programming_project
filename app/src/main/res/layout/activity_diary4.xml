@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="#002060"
+    android:orientation="vertical"
+    android:layout_height="match_parent">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp">
+
+        <ImageView
+            android:layout_marginLeft="25dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:src="@drawable/gauge"/>
+
+        <ProgressBar
+            android:layout_centerHorizontal="true"
+            android:id="@+id/progress"
+            android:progress="40"
+            style="@android:style/Widget.ProgressBar.Horizontal"
+            android:layout_centerVertical="true"
+            android:layout_width="200dp"
+            android:max="100"
+            android:layout_height="wrap_content"/>
+
+        <Button
+            android:background="@drawable/custom_btn"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="사용"/>
+    </RelativeLayout>
+
+
+    <TextView
+        android:layout_marginTop="10dp"
+        android:textSize="35dp"
+        android:textColor="#ffffff"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="최초의 발자국을 남기다!"/>
+
+
+    <ImageView
+        android:layout_marginTop="30dp"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_gravity="center"
+        android:src="@drawable/excard3"/>
+
+
+    <TextView
+        android:layout_marginTop="30dp"
+        android:textSize="35dp"
+        android:textColor="#ffffff"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="미션 성공!"/>
+
+    <TextView
+        android:padding="20dp"
+        android:layout_marginTop="10dp"
+        android:textSize="30dp"
+        android:textColor="#ffffff"
+        android:gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="임무를 완수한 당신은 행성에 첫 발자국을 찍는데..!"/>
+</LinearLayout>

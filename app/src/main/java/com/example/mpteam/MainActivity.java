@@ -1,97 +1,48 @@
 package com.example.mpteam;
 
-import android.app.ProgressDialog;
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
+import android.os.Bundle;
+import android.view.MenuItem;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-    private static final String TAG = "MainActivity";
+public class MainActivity extends AppCompatActivity {
 
-    private FirebaseAuth firebaseAuth;
-    private FirebaseUser firebaseUser;
-
-    Button memberWithdrawal, logOut;
-    ProgressDialog progressDialog;
-
+    BottomNavigationView bottomNavigationView;
+    BoxFragment boxFragment;
+    DiaryFragment diaryFragment;
+    MyPageFragment myPageFragment;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        memberWithdrawal = (Button) findViewById(R.id.memberWithdrawal);
-        logOut = (Button) findViewById(R.id.logOut);
-        progressDialog = new ProgressDialog(this); //conncect Function
+        bottomNavigationView = findViewById(R.id.bottomNavigationView);
 
-        firebaseAuth = FirebaseAuth.getInstance();
+        boxFragment = new BoxFragment();
+        diaryFragment = new DiaryFragment();
+        myPageFragment = new MyPageFragment();
 
-        /*if (firebaseAuth.getCurrentUser() == null) {
-            finish();
-            startActivity(new Intent(this, LoginActivity.class));
-        }
-        FirebaseUser user = firebaseAuth.getCurrentUser();*/
+        getSupportFragmentManager().beginTransaction().replace(R.id.main_layout,myPageFragment).commitAllowingStateLoss();
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                switch (menuItem.getItemId()){
+                    case R.id.mypage:{
+                        getSupportFragmentManager().beginTransaction() .replace(R.id.main_layout,myPageFragment).commitAllowingStateLoss();
+                        return true;
+                    } case R.id.diary:{
+                        getSupportFragmentManager().beginTransaction() .replace(R.id.main_layout,diaryFragment).commitAllowingStateLoss();
+                        return true;
+                    } case R.id.box:{
+                        getSupportFragmentManager().beginTransaction() .replace(R.id.main_layout,boxFragment).commitAllowingStateLoss();
+                        return true;
 
-        memberWithdrawal.setOnClickListener(this);
-        logOut.setOnClickListener(this);
-
-    }
-
-    @Override
-    protected void onResume() { //액티비티 화면이 띄워졌을 때 로그인 안되어있으면 로그인 액티비티 띄우기
-        super.onResume();
-        firebaseUser = firebaseAuth.getCurrentUser();
-        if (firebaseUser == null) {
-            startActivity(new Intent(this, LoginActivityResume.class));
-        }
-    }
-
-    private void Logout() {
-
-    }
-
-    private void deleteUser() {
-
-        progressDialog.setMessage("Deleting User. please wait a moment please...");
-        progressDialog.show();
-
-        firebaseUser.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if (task.isSuccessful()) {
-                    progressDialog.dismiss();
-                    Toast.makeText(getApplicationContext(), "Your account has been deleted.", Toast.LENGTH_LONG).show();
-                    finish();
-                    startActivity(new Intent(getApplicationContext(), LoginActivity.class));
-                } else {
-                    Toast.makeText(getApplicationContext(), "Please try again", Toast.LENGTH_SHORT).show();
+                    }default: return false;
                 }
             }
         });
-    }
 
-
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.memberWithdrawal:
-                deleteUser();
-                break;
-            case R.id.logOut:
-                firebaseAuth.signOut();
-                finish();
-                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
-                break;
-        }
     }
 }

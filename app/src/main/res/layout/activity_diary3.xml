@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:background="#002060"
+    android:layout_height="match_parent"
+    tools:context=".DiaryActivity">
+
+    <TextView
+        android:id="@+id/day_text"
+        android:layout_marginTop="20dp"
+        android:textSize="35dp"
+        android:textColor="#ffffff"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="날짜"/>
+
+    <TextView
+        android:layout_marginTop="10dp"
+        android:textSize="28dp"
+        android:textColor="#ffffff"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="당신의 오늘은 어떤 하루였나요?"/>
+
+
+
+    <EditText
+        android:gravity="center"
+        android:layout_marginTop="20dp"
+        android:textSize="30dp"
+        android:textColor="#ffffff"
+        android:layout_width="wrap_content"
+        android:layout_height="400dp"
+        android:layout_gravity="center"
+        android:hint="오늘은 아침부터 되는 일이 없었다. 할 일은 많고 예민한데 친구와 얘길하던 중 해선 안 될 말을 해버렸다. 친구에게 미안하지만 어떻게 사과해야할지 모르겠어서 마음이 착잡했다."/>
+
+
+    <RelativeLayout
+        android:layout_marginTop="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="20dp">
+
+        <ImageView
+            android:layout_alignParentLeft="true"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:src="@drawable/ic_outline_add_location_alt_24"/>
+
+        <ImageView
+            android:layout_alignParentRight="true"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:src="@drawable/ic_outline_image_search_24"/>
+    </RelativeLayout>
+
+
+    <Button
+        android:id="@+id/next_btn"
+        android:layout_width="150dp"
+        android:layout_height="60dp"
+        android:layout_gravity="center"
+        android:background="@drawable/custom_btn"
+        android:text="기록" />
+</LinearLayout>

@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:background="#002060"
+    android:layout_height="match_parent"
+    tools:context=".StartActivity">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp">
+
+        <ImageView
+            android:layout_marginLeft="25dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:src="@drawable/gauge"/>
+
+        <ProgressBar
+            android:layout_centerHorizontal="true"
+            android:id="@+id/progress"
+            android:progress="40"
+            style="@android:style/Widget.ProgressBar.Horizontal"
+            android:layout_centerVertical="true"
+            android:layout_width="200dp"
+            android:max="100"
+            android:layout_height="wrap_content"/>
+
+        <Button
+            android:background="@drawable/custom_btn"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="사용"/>
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_marginTop="150dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_marginLeft="10dp"
+                android:layout_alignParentLeft="true"
+                android:src="@drawable/roket_white"
+                android:layout_width="100dp"
+                android:layout_height="100dp"/>
+
+            <ImageView
+                android:layout_marginRight="10dp"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/moon"
+                android:layout_width="100dp"
+                android:layout_height="100dp"/>
+        </RelativeLayout>
+
+        <ImageView
+            android:layout_marginLeft="150dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/ic_outline_location_on2_24"/>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+          <View
+              android:layout_marginLeft="50dp"
+              android:layout_width="5dp"
+              android:layout_height="50dp"
+              android:background="#ffffff"/>
+
+            <View
+                android:background="#ffffff"
+                android:layout_gravity="center"
+                android:layout_width="300dp"
+                android:layout_height="5dp"/>
+
+
+            <View
+                android:layout_width="5dp"
+                android:layout_height="50dp"
+                android:background="#ffffff"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:gravity="center"
+            android:padding="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/period_text"
+                android:layout_marginTop="10dp"
+                android:textSize="28dp"
+                android:textColor="#ffffff"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="[몇주]"/>
+
+
+
+            <TextView
+                android:layout_marginTop="10dp"
+                android:textSize="28dp"
+                android:textColor="#ffffff"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text=" 후 "/>
+
+
+            <TextView
+                android:id="@+id/name_text"
+                android:layout_marginTop="10dp"
+                android:textSize="28dp"
+                android:textColor="#ffffff"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="[행성]"/>
+
+
+            <TextView
+                android:layout_marginTop="10dp"
+                android:textSize="28dp"
+                android:textColor="#ffffff"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="에 도착합니다."/>
+        </LinearLayout>
+
+
+        <TextView
+            android:layout_marginTop="30dp"
+            android:textSize="20dp"
+            android:textColor="#ffffff"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="만약 목표에 실패한다면"/>
+
+        <TextView
+            android:layout_marginTop="10dp"
+            android:textSize="20dp"
+            android:textColor="#ffffff"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="여러분은 우주 미아가 될지도 모릅니다."/>
+
+
+        <Button
+            android:id="@+id/next_btn"
+            android:layout_marginTop="50dp"
+            android:layout_gravity="center"
+            android:background="@drawable/custom_btn"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_width="150dp"
+            android:layout_height="60dp"
+            android:text="출발"/>
+    </LinearLayout>
+</LinearLayout>
