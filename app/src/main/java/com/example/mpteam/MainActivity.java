@@ -3,10 +3,17 @@ package com.example.mpteam;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.Preference;
+import android.util.Log;
 import android.view.MenuItem;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -14,6 +21,8 @@ public class MainActivity extends AppCompatActivity {
     BoxFragment boxFragment;
     DiaryFragment diaryFragment;
     MyPageFragment myPageFragment;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,6 +33,16 @@ public class MainActivity extends AppCompatActivity {
         boxFragment = new BoxFragment();
         diaryFragment = new DiaryFragment();
         myPageFragment = new MyPageFragment();
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+
+        // 안드로이드 앱 내부에서 공유할 유저 토큰을 담을 저장소
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        String token = user.getUid();
+        SharedPreferences pref = getSharedPreferences("pref", Activity.MODE_PRIVATE);
+        pref.edit().putString("userToken", token);
+        Log.d("MainToken", "This is token: " + token);
 
         getSupportFragmentManager().beginTransaction().replace(R.id.main_layout,myPageFragment).commitAllowingStateLoss();
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
