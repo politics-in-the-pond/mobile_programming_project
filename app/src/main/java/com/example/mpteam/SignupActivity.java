@@ -15,7 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.mpteam.data.UserData;
-import com.example.mpteam.modules.UserDataDB;
+import com.example.mpteam.modules.DataDB;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -138,7 +138,7 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
                             ArrayList<String> userPosts = new ArrayList<String>();
                             ArrayList<Integer> userCards = new ArrayList<Integer>();
                             firebaseUser = firebaseAuth.getCurrentUser();
-                            UserDataDB db  = new UserDataDB();
+                            DataDB db  = new DataDB();
                             db.setUserData(new UserData(firebaseUser.getUid(), editTextSignUpNickname.getText().toString(), userPosts, userCards));
                             finish();
                             startActivity(new Intent(getApplicationContext(), MainActivity.class));
