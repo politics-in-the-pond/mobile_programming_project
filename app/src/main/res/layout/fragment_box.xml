@@ -14,7 +14,7 @@
         android:gravity="center"
         android:textColor="@color/white"
         android:textStyle="bold"
-        android:fontFamily="@font/bamin_hana"
+        android:fontFamily="@font/lab_digital"
         android:layout_marginTop="20dp"></TextView>
     <FrameLayout
         android:layout_width="match_parent"
