@@ -14,11 +14,15 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.mpteam.data.UserData;
+import com.example.mpteam.modules.DataDB;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
+import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 public class SignupActivity extends AppCompatActivity implements View.OnClickListener {
@@ -38,6 +42,7 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
     private TextView yourAccount, create;
     ProgressDialog progressDialog;
     FirebaseAuth firebaseAuth;
+    FirebaseUser firebaseUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,15 +53,16 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
 
         /* ********if already logged in,finish this job********* */
 
-        if (firebaseAuth.getCurrentUser() != null) {
+/*        if (firebaseAuth.getCurrentUser() != null) {
             finish();
             startActivity(new Intent(getApplicationContext(), MainActivity.class));
 
-        }
+        }*/
         //initializing views
         editTextSignUpEmail = (EditText) findViewById(R.id.editTextSignUpEmail);
         editTextSignUpPassword = (EditText) findViewById(R.id.editTextSignUpPassword);
         editTextSignUpPasswordConfirm = (EditText) findViewById(R.id.editTextSignUpPasswordConfirm);
+        editTextSignUpNickname = (EditText) findViewById(R.id.editTextSignUpNickname);
         buttonBack = (ImageView) findViewById(R.id.buttonBack);
         textviewMessage = (TextView) findViewById(R.id.textviewMessage);
         create = (TextView) findViewById(R.id.create);
@@ -129,6 +135,11 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
+                            ArrayList<String> userPosts = new ArrayList<String>();
+                            ArrayList<Integer> userCards = new ArrayList<Integer>();
+                            firebaseUser = firebaseAuth.getCurrentUser();
+                            DataDB db  = new DataDB();
+                            db.setUserData(new UserData(firebaseUser.getUid(), editTextSignUpNickname.getText().toString(), userPosts, userCards));
                             finish();
                             startActivity(new Intent(getApplicationContext(), MainActivity.class));
                         } else {
