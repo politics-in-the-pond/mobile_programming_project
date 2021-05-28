@@ -55,7 +55,6 @@ public class MainActivity extends FragmentActivity {
         pref.edit().putString("userToken", token);
         Log.d("MainToken", "This is token: " + token);
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.main_layout,myPageFragment).commitAllowingStateLoss();
 
         fragment_list.add(myPageFragment);
         fragment_list.add(diaryFragment);
