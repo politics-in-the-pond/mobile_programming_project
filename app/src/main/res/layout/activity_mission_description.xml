@@ -1,32 +1,31 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/background_grad"
+    android:background="@drawable/description_emotion_mission_grad"
     android:orientation="vertical">
 
     <LinearLayout
-        android:layout_width="246dp"
-        android:layout_height="223dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_centerInParent="true"
         android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/simbolAppForest"
-            android:layout_width="135dp"
-            android:layout_height="136dp"
-            android:layout_gravity="center_horizontal"
-            android:src="@drawable/app_forest_symbol2" />
+<!--        <ImageView-->
+<!--            android:id="@+id/simbolAppForest"-->
+<!--            android:layout_width="135dp"-->
+<!--            android:layout_height="136dp"-->
+<!--            android:layout_gravity="center_horizontal"-->
+<!--            android:src="@drawable/descrip_emotion" />-->
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="400dp"
             android:fontFamily="@font/opensans_bold"
-            android:text="Mind Space"
+            android:text="설명"
             android:textColor="#FFFFFF"
-            android:textSize="32sp"
-            android:textStyle="italic" />
+            android:textSize="32sp" />
 
 
     </LinearLayout>
