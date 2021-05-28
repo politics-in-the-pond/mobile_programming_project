@@ -8,20 +8,18 @@ import java.io.File;
 public class AutoLoginProvider {
 
     FileIO io = new FileIO();
-    File file = new File("/MindSpace", "login.dat");
-    File dir = new File("/MindSpace");
     EncryptModule encryptModule = new EncryptModule();
+    String filename = "login.dat";
 
-    public void AutoLoginWriter(String email, String password) {
+    public void AutoLoginWriter(Context context, String email, String password) {
+        File file = new File(context.getFilesDir(), filename);
         String string = email + "$" + password;
         byte[] encrypted = encryptModule.encrypt(string.getBytes());
-        if (!dir.exists()) {
-            dir.mkdir();
-        }
         io.FileWriter(file, encrypted);
     }
 
-    public String[] AutoLoginReader() {
+    public String[] AutoLoginReader(Context context) {
+        File file = new File(context.getFilesDir(), filename);
         String[] information = new String[2]; //information[0] : email / information[1] : password
         byte[] bytes = io.FileReader(file);
         byte[] decrypted = encryptModule.decrypt(bytes);
@@ -32,7 +30,8 @@ public class AutoLoginProvider {
         return information;
     }
 
-    public boolean AutoLoginRemover() {
+    public boolean AutoLoginRemover(Context context) {
+        File file = new File(context.getFilesDir(), filename);
         if (file.exists()) {
             file.delete();
             return true;
@@ -41,7 +40,8 @@ public class AutoLoginProvider {
         }
     }
 
-    public boolean AutoLoginChecker() {
+    public boolean AutoLoginChecker(Context context) {
+        File file = new File(context.getFilesDir(), filename);
         if (file.exists()) {
             return true;
         } else {
