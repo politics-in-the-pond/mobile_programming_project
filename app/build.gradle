@@ -9,8 +9,8 @@ android {
     compileSdkVersion 30
     buildToolsVersion "30.0.3"
 
-    dataBinding {
-        enabled true
+    buildFeatures{
+        dataBinding true
     }
 
     defaultConfig {
@@ -38,8 +38,6 @@ android {
 }
 
 dependencies {
-    implementation 'org.projectlombok:lombok'
-    implementation 'org.projectlombok:lombok'
     compileOnly 'org.projectlombok:lombok:1.18.12'
     annotationProcessor 'org.projectlombok:lombok:1.18.12'
     implementation 'androidx.appcompat:appcompat:1.2.0'
