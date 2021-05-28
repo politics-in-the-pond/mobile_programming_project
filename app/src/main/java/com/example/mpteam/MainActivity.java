@@ -57,6 +57,7 @@ public class MainActivity extends FragmentActivity {
         pref.edit().putString("userToken", token);
         Log.d("MainToken", "This is token: " + token);
 
+
         fragment_list.add(myPageFragment);
         fragment_list.add(diaryFragment);
         fragment_list.add(boxFragment);

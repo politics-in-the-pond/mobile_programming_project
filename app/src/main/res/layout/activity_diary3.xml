@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:tools="http://schemas.android.com/tools">
+
+<LinearLayout
     android:layout_width="match_parent"
     android:orientation="vertical"
     android:background="#002060"
@@ -28,16 +30,16 @@
         android:text="당신의 오늘은 어떤 하루였나요?"/>
 
 
-
     <EditText
-        android:gravity="center"
-        android:layout_marginTop="20dp"
-        android:textSize="30dp"
-        android:textColor="#ffffff"
+        android:id="@+id/writing"
         android:layout_width="wrap_content"
         android:layout_height="400dp"
         android:layout_gravity="center"
-        android:hint="오늘은 아침부터 되는 일이 없었다. 할 일은 많고 예민한데 친구와 얘길하던 중 해선 안 될 말을 해버렸다. 친구에게 미안하지만 어떻게 사과해야할지 모르겠어서 마음이 착잡했다."/>
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:hint="오늘은 아침부터 되는 일이 없었다. 할 일은 많고 예민한데 친구와 얘길하던 중 해선 안 될 말을 해버렸다. 친구에게 미안하지만 어떻게 사과해야할지 모르겠어서 마음이 착잡했다."
+        android:textColor="#ffffff"
+        android:textSize="30dp" />
 
 
     <RelativeLayout
@@ -47,16 +49,18 @@
         android:padding="20dp">
 
         <ImageView
-            android:layout_alignParentLeft="true"
+            android:id="@+id/map"
             android:layout_width="70dp"
             android:layout_height="70dp"
-            android:src="@drawable/ic_outline_add_location_alt_24"/>
+            android:layout_alignParentLeft="true"
+            android:src="@drawable/ic_outline_add_location_alt_24" />
 
         <ImageView
-            android:layout_alignParentRight="true"
+            android:id="@+id/gallery"
             android:layout_width="70dp"
             android:layout_height="70dp"
-            android:src="@drawable/ic_outline_image_search_24"/>
+            android:layout_alignParentRight="true"
+            android:src="@drawable/ic_outline_image_search_24" />
     </RelativeLayout>
 
 
@@ -68,3 +72,4 @@
         android:background="@drawable/custom_btn"
         android:text="기록" />
 </LinearLayout>
+</layout>
