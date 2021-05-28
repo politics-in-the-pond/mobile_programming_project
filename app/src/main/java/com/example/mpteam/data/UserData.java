@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class UserData {
     String userId, nickname;
-    ArrayList<String> userPosts;
+    ArrayList<String> userPosts; //public 글만 사용예정
     ArrayList<Integer> cardIndex;
 
     public UserData(String userId, String nickname, ArrayList<String> userPosts, ArrayList<Integer> cardIndex){
@@ -37,6 +37,8 @@ public class UserData {
     public void setUserPosts(ArrayList<String> userPosts) {
         this.userPosts = userPosts;
     }
+
+    public void addUserPosts(String s) {this.userPosts.add(s); }
 
     public ArrayList<Integer> getCardIndex() {
         return cardIndex;
