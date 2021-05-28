@@ -36,5 +36,5 @@ public class UploadImage {
                 return riversRef.getDownloadUrl();
             }
         });
-    }*/ // 이미지 업로드 작업중
+    } // 이미지 업로드 작업중*/
 }
