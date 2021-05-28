@@ -15,8 +15,11 @@ import androidx.databinding.DataBindingUtil;
 
 import com.example.mpteam.data.PostData;
 import com.example.mpteam.databinding.ActivityDiary3Binding;
+import com.example.mpteam.modules.DataDB;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -33,6 +36,8 @@ public class DiaryActivity3 extends AppCompatActivity {
     SharedPreferences pref;
     Uri file;
     PostData post;
+    FirebaseUser user;
+    DataDB db;
 
     private final int GET_GALLERY_IMAGE = 200;
 
@@ -52,6 +57,9 @@ public class DiaryActivity3 extends AppCompatActivity {
 //        이전의 코드
 //        day_text = findViewById(R.id.day_text);
 //        day_text.setText(day);
+
+        db = new DataDB();
+        user = FirebaseAuth.getInstance().getCurrentUser();
 
         gallery = findViewById(R.id.gallery);
         gallery.setOnClickListener(new View.OnClickListener() {
@@ -88,7 +96,7 @@ public class DiaryActivity3 extends AppCompatActivity {
                                 Log.d("TAG", imageUrl.toString());
 
                                 post = new PostData();
-                                post.setUserId(pref.getString("userToken", null));
+                                post.setUserId(user.getUid());
                                 post.setTitle("제목");
                                 post.setContent(binding.writing.getText().toString());
                                 post.setDateTime(day);
@@ -98,6 +106,8 @@ public class DiaryActivity3 extends AppCompatActivity {
                                 post.setEmotion(1);
                                 post.setImageURL(new ArrayList<String>());
                                 post.addImageURL(imageUrl.toString());
+
+                                db.setPostData(post);
 
                                 Intent intent = new Intent(DiaryActivity3.this, DiaryActivity4.class);
                                 startActivity(intent);
