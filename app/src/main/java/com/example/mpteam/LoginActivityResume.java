@@ -119,9 +119,9 @@ public class LoginActivityResume extends AppCompatActivity implements View.OnCli
                         progressDialog.dismiss();
                         if (task.isSuccessful()) {
                             if (autoLogin.isChecked()) {
-                                autoLoginProvider.AutoLoginWriter(email, password);
+                                autoLoginProvider.AutoLoginWriter(getApplicationContext(), email, password);
                             } else {
-                                autoLoginProvider.AutoLoginRemover();
+                                autoLoginProvider.AutoLoginRemover(getApplicationContext());
                             }
                             finish();
                         } else {

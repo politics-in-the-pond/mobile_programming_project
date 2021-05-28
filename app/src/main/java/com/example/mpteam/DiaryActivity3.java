@@ -20,7 +20,7 @@ public class DiaryActivity3 extends AppCompatActivity {
     EditText writing;
     ImageView map, gallery;
 
-    
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,12 +46,7 @@ public class DiaryActivity3 extends AppCompatActivity {
     }
 
 
-    private void Upload(){
-        PostData diary = new PostData();
-        diary.setContent();
 
-
-    }
 
 
 

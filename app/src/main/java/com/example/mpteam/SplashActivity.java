@@ -26,8 +26,8 @@ public class SplashActivity extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         autoLoginProvider = new AutoLoginProvider();
 
-        if (autoLoginProvider.AutoLoginChecker()) {
-            String[] emailpw = autoLoginProvider.AutoLoginReader();
+        if (autoLoginProvider.AutoLoginChecker(getApplicationContext())) {
+            String[] emailpw = autoLoginProvider.AutoLoginReader(getApplicationContext());
             firebaseAuth.signInWithEmailAndPassword(emailpw[0], emailpw[1])
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                         @Override
