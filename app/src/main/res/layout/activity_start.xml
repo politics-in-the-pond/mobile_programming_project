@@ -53,14 +53,16 @@
             android:layout_height="wrap_content">
 
             <ImageView
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"
                 android:layout_alignParentLeft="true"
-                android:src="@drawable/roket_white"
-                android:layout_width="100dp"
-                android:layout_height="100dp"/>
+                android:src="@drawable/rocket_symbol2"
+                android:layout_width="80dp"
+                android:layout_height="80dp"/>
 
             <ImageView
-                android:layout_marginRight="10dp"
+                android:id="@+id/planet"
+                android:layout_marginRight="20dp"
                 android:layout_alignParentRight="true"
                 android:src="@drawable/moon"
                 android:layout_width="100dp"
@@ -109,8 +111,9 @@
                 android:textSize="28dp"
                 android:textColor="#ffffff"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="32dp"
                 android:layout_gravity="center"
+                android:fontFamily="@font/lab_digital"
                 android:text="[몇주]"/>
 
 
@@ -120,8 +123,9 @@
                 android:textSize="28dp"
                 android:textColor="#ffffff"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="32dp"
                 android:layout_gravity="center"
+                android:fontFamily="@font/lab_digital"
                 android:text=" 후 "/>
 
 
@@ -131,8 +135,9 @@
                 android:textSize="28dp"
                 android:textColor="#ffffff"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="32dp"
                 android:layout_gravity="center"
+                android:fontFamily="@font/lab_digital"
                 android:text="[행성]"/>
 
 
@@ -141,7 +146,8 @@
                 android:textSize="28dp"
                 android:textColor="#ffffff"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="32dp"
+                android:fontFamily="@font/lab_digital"
                 android:layout_gravity="center"
                 android:text="에 도착합니다."/>
         </LinearLayout>
@@ -154,6 +160,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:fontFamily="@font/lab_digital"
             android:text="만약 목표에 실패한다면"/>
 
         <TextView
@@ -163,6 +170,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:fontFamily="@font/lab_digital"
             android:text="여러분은 우주 미아가 될지도 모릅니다."/>
 
 
@@ -173,8 +181,9 @@
             android:background="@drawable/custom_btn"
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
-            android:layout_width="150dp"
-            android:layout_height="60dp"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:textSize="17dp"
             android:text="출발"/>
     </LinearLayout>
 </LinearLayout>

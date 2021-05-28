@@ -49,13 +49,13 @@
 
 
            <ImageView
-               android:layout_width="150dp"
-               android:layout_height="150dp"
+               android:layout_width="130dp"
+               android:layout_height="130dp"
                android:src="@drawable/ic_outline_account_circle_24"></ImageView>
 
            <LinearLayout
-               android:layout_marginLeft="10dp"
-               android:layout_marginTop="30dp"
+               android:layout_marginLeft="15dp"
+               android:layout_marginTop="25dp"
                android:layout_width="match_parent"
                android:layout_height="wrap_content"
                android:orientation="vertical"
@@ -115,6 +115,7 @@
                />
            <Button
                style="@style/Widget.AppCompat.Button.Borderless"
+               android:id="@+id/change_nickname"
                android:text="닉네임 변경"
                android:gravity="left"
                android:layout_marginTop="20dp"
@@ -127,6 +128,7 @@
            <Button
                style="@style/Widget.AppCompat.Button.Borderless"
                android:text="이메일 변경"
+               android:id="@+id/change_email"
                android:gravity="left"
                android:paddingLeft="20dp"
                android:textSize="20dp"
@@ -137,6 +139,7 @@
            <Button
                style="@style/Widget.AppCompat.Button.Borderless"
                android:text="비밀번호 변경"
+               android:id="@+id/change_pw"
                android:gravity="left"
                android:paddingLeft="20dp"
                android:textSize="20dp"
@@ -188,6 +191,7 @@
                />
            <Button
                style="@style/Widget.AppCompat.Button.Borderless"
+               android:id="@+id/logout_btn"
                android:text="로그아웃"
                android:gravity="left"
                android:layout_marginTop="20dp"

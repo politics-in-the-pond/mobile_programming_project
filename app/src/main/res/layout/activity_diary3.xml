@@ -13,7 +13,7 @@
     <TextView
         android:id="@+id/day_text"
         android:layout_marginTop="20dp"
-        android:textSize="35dp"
+        android:textSize="25dp"
         android:textColor="#ffffff"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -22,7 +22,7 @@
 
     <TextView
         android:layout_marginTop="10dp"
-        android:textSize="28dp"
+        android:textSize="25dp"
         android:textColor="#ffffff"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -32,14 +32,15 @@
 
     <EditText
         android:id="@+id/writing"
-        android:layout_width="wrap_content"
+        android:layout_width="350dp"
         android:layout_height="400dp"
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
         android:gravity="center"
-        android:hint="오늘은 아침부터 되는 일이 없었다. 할 일은 많고 예민한데 친구와 얘길하던 중 해선 안 될 말을 해버렸다. 친구에게 미안하지만 어떻게 사과해야할지 모르겠어서 마음이 착잡했다."
+        android:hint="하루를 되돌아보며 소중했던\n 시간들을 담아봅시다:)"
+        android:textColorHint="@color/white"
         android:textColor="#ffffff"
-        android:textSize="30dp" />
+        android:textSize="20dp" />
 
 
     <RelativeLayout
@@ -50,15 +51,15 @@
 
         <ImageView
             android:id="@+id/map"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_alignParentLeft="true"
             android:src="@drawable/ic_outline_add_location_alt_24" />
 
         <ImageView
             android:id="@+id/gallery"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_alignParentRight="true"
             android:src="@drawable/ic_outline_image_search_24" />
     </RelativeLayout>
@@ -66,8 +67,9 @@
 
     <Button
         android:id="@+id/next_btn"
-        android:layout_width="150dp"
-        android:layout_height="60dp"
+        android:layout_width="90dp"
+        android:layout_height="45dp"
+        android:textSize="17dp"
         android:layout_gravity="center"
         android:background="@drawable/custom_btn"
         android:text="기록" />
