@@ -18,6 +18,8 @@
         android:layout_marginStart="0dp"
         android:layout_gravity="bottom"
         android:background="#ffffff"
+        app:itemTextColor="@drawable/bottom_item_color"
+        app:itemIconTint="@drawable/bottom_item_color"
         app:menu="@menu/menu_bottom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
