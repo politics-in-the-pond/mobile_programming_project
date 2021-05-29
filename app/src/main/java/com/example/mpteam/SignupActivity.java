@@ -139,7 +139,7 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
                             ArrayList<Integer> userCards = new ArrayList<Integer>();
                             firebaseUser = firebaseAuth.getCurrentUser();
                             DataDB db  = new DataDB();
-                            db.setUserData(new UserData("",firebaseUser.getUid(), editTextSignUpNickname.getText().toString(), userPosts, userCards));
+                            db.setUserData(new UserData(firebaseUser.getUid(), editTextSignUpNickname.getText().toString(),"", userPosts, userCards));
                             finish();
                             startActivity(new Intent(getApplicationContext(), MainActivity.class));
                         } else {
