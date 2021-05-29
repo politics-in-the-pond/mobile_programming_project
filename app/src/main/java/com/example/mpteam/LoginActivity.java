@@ -34,11 +34,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     TextView textviewFindPassword;
     CheckBox autoLogin;
     AutoLoginProvider autoLoginProvider;
-    private TextView tvLogin;
-    private TextView tvToYourAccount;
     ProgressDialog progressDialog;
     //define firebase object
     FirebaseAuth firebaseAuth;
+    private TextView tvLogin;
+    private TextView tvToYourAccount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

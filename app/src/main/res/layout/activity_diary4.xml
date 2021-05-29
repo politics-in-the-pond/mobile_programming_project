@@ -42,11 +42,12 @@
 
     <TextView
         android:layout_marginTop="10dp"
-        android:textSize="35dp"
+        android:textSize="30dp"
         android:textColor="#ffffff"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:fontFamily="@font/lab_digital"
         android:text="최초의 발자국을 남기다!"/>
 
 
@@ -55,26 +56,29 @@
         android:layout_width="300dp"
         android:layout_height="300dp"
         android:layout_gravity="center"
+        android:id="@+id/ex_card"
         android:src="@drawable/excard3"/>
 
 
     <TextView
         android:layout_marginTop="30dp"
-        android:textSize="35dp"
+        android:textSize="30dp"
         android:textColor="#ffffff"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:fontFamily="@font/lab_digital"
         android:text="미션 성공!"/>
 
     <TextView
         android:padding="20dp"
         android:layout_marginTop="10dp"
-        android:textSize="30dp"
+        android:textSize="25dp"
         android:textColor="#ffffff"
         android:gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="임무를 완수한 당신은 행성에 첫 발자국을 찍는데..!"/>
+        android:fontFamily="@font/lab_digital"
+        android:text="임무를 완수한 당신은 \n행성에 첫 발자국을 찍는데..!"/>
 </LinearLayout>

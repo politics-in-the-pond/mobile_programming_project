@@ -18,12 +18,10 @@ import com.google.firebase.auth.FirebaseUser;
 public class Logout extends AppCompatActivity implements View.OnClickListener {
 
     private static final String TAG = "Logout";
-
-    private FirebaseAuth firebaseAuth;
-    private FirebaseUser firebaseUser;
-
     Button memberWithdrawal, logOut;
     ProgressDialog progressDialog;
+    private FirebaseAuth firebaseAuth;
+    private FirebaseUser firebaseUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
