@@ -92,6 +92,7 @@ public class DiaryActivity3 extends AppCompatActivity {
                             @Override
                             public void onSuccess(Uri uri) {
                                 Uri imageUrl = uri;
+
                                 Log.d("TAG", imageUrl.toString());
 
                                 post = new PostData();
@@ -104,7 +105,11 @@ public class DiaryActivity3 extends AppCompatActivity {
                                 post.setLongitude(3.14);
                                 post.setEmotion(1);
                                 post.setImageURL(new ArrayList<String>());
-                                post.addImageURL(imageUrl.toString());
+                                if(imageUrl==null){
+                                    post.addImageURL("");
+                                } else{
+                                    post.addImageURL(imageUrl.toString());
+                                }
 
                                 db.setPostData(post);
 
