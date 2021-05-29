@@ -21,6 +21,7 @@ import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 public class MapActivity extends AppCompatActivity {
 
@@ -141,7 +142,7 @@ public class MapActivity extends AppCompatActivity {
 
         // 현재 위치 표시
         map.setMyLocationEnabled(true);
-
+        map.addMarker(new MarkerOptions().position(position).title("내 위치"));
     }
 
     // 현재 위치 측정이 성공하면 반응하는 리스너
