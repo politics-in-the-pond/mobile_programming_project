@@ -5,40 +5,39 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
-
-        android:usesCleartextTraffic="true"
         android:allowBackup="true"
-        android:label="@string/app_name"
         android:icon="@drawable/rocket_symbol"
-        android:supportsRtl="true"
+        android:label="@string/app_name"
         android:roundIcon="@drawable/rocket_symbol"
-        android:theme="@style/AppTheme">
-        <activity android:name="com.example.mpteam.LoginActivity"/>
-        <activity android:name="com.example.mpteam.LoginActivityResume"/>
-        <activity android:name="com.example.mpteam.SignupActivity"/>
-        <activity android:name="com.example.mpteam.FindActivity" />
-        <activity android:name="com.example.mpteam.MainActivity" />
-        <activity android:name="com.example.mpteam.Logout" />
-        <activity android:name="com.example.mpteam.DiaryActivity4"></activity>
-        <activity android:name="com.example.mpteam.DiaryActivity3" />
-        <activity android:name="com.example.mpteam.DiaryActivity2" />
-        <activity android:name="com.example.mpteam.DiaryActivity" />
-        <activity android:name="com.example.mpteam.StartActivity" />
-        <activity android:name="com.example.mpteam.MapActivity"/>
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true">
+        <activity android:name=".EmotionStaticsActivity"></activity>
+        <activity android:name=".LoginActivity" />
+        <activity android:name=".LoginActivityResume" />
+        <activity android:name=".SignupActivity" />
+        <activity android:name=".FindActivity" />
+        <activity android:name=".MainActivity" />
+        <activity android:name=".Logout" />
+        <activity android:name=".DiaryActivity4" />
+        <activity android:name=".DiaryActivity3" />
+        <activity android:name=".DiaryActivity2" />
+        <activity android:name=".DiaryActivity" />
+        <activity android:name=".StartActivity" />
+        <activity android:name=".MapActivity" />
 
         <uses-library
             android:name="org.apache.http.legacy"
-            android:required="false"/>
+            android:required="false" />
 
         <activity
-            android:name="com.example.mpteam.SplashActivity"
-            android:theme="@style/FullScreenTheme"
+            android:name=".SplashActivity"
             android:screenOrientation="portrait"
+            android:theme="@style/FullScreenTheme"
             android:windowSoftInputMode="adjustResize|adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -46,6 +45,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyCS2vgoSfPIGL19QgWrCsbx4CALL10nH-c" />

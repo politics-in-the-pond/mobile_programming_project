@@ -67,6 +67,7 @@ public class MyPageFragment extends Fragment {
     Button btn_change_email;
     Button btn_change_pw;
     Button btn_logout;
+    Button btn_emotion_statics;
     AlertDialog nickname_change_dialog;
     AlertDialog email_change_dialog;
     AlertDialog image_change_dialog;
@@ -315,6 +316,7 @@ public class MyPageFragment extends Fragment {
         btn_change_email = viewGroup.findViewById(R.id.change_email);
         btn_change_pw = viewGroup.findViewById(R.id.change_pw);
         btn_logout = viewGroup.findViewById(R.id.logout_btn);
+        btn_emotion_statics=viewGroup.findViewById(R.id.btn_emotion_statics);
         create_nickname_dialog();
         create_email_dialog();
         create_image_dialog();
@@ -366,6 +368,13 @@ public class MyPageFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 pw_check_dialog.show();
+            }
+        });
+        btn_emotion_statics.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), EmotionStaticsActivity.class);
+                startActivity(intent);
             }
         });
         btn_logout.setOnClickListener(new View.OnClickListener() {
