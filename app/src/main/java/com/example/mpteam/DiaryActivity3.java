@@ -9,12 +9,16 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
+import androidx.databinding.Observable;
 
 import com.example.mpteam.data.PostData;
 import com.example.mpteam.databinding.ActivityDiary3Binding;
+import com.google.android.gms.common.util.DataUtils;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentReference;
 import com.example.mpteam.modules.DataDB;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -27,8 +31,12 @@ import com.google.firebase.storage.UploadTask;
 
 import java.util.ArrayList;
 
-public class DiaryActivity3 extends AppCompatActivity {
+import java.util.HashMap;
+import java.util.Map;
 
+import lombok.NonNull;
+
+public class DiaryActivity3 extends AppCompatActivity {
     private final int GET_GALLERY_IMAGE = 200;
     String day;
     Button next_btn;
@@ -70,8 +78,10 @@ public class DiaryActivity3 extends AppCompatActivity {
             }
         });
 
+
         // 기록버튼
         next_btn = findViewById(R.id.next_btn);
+
         next_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -122,8 +132,9 @@ public class DiaryActivity3 extends AppCompatActivity {
                 });
             }
         });
-    }
 
+        binding.map.setOnClickListener(new Map());
+    }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -134,13 +145,13 @@ public class DiaryActivity3 extends AppCompatActivity {
     }
 
 
-    // 일기 업로드
-    public void updateWriting() {
-        FirebaseFirestore database;
 
-        PostData postData = new PostData();
-        postData.setContent(binding.writing.getText().toString());
-        postData.setUserId(pref.getString("userToken", null));
 
+    private class Map implements View.OnClickListener{
+        @Override
+        public void onClick(View v) {
+            Intent mapIntent = new Intent(DiaryActivity3.this, MapActivity.class);
+            startActivityForResult(mapIntent, 0);
+        }
     }
 }
