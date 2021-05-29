@@ -29,6 +29,7 @@ import java.util.ArrayList;
 
 public class DiaryActivity3 extends AppCompatActivity {
 
+    private final int GET_GALLERY_IMAGE = 200;
     String day;
     Button next_btn;
     ImageView gallery;
@@ -38,8 +39,6 @@ public class DiaryActivity3 extends AppCompatActivity {
     PostData post;
     FirebaseUser user;
     DataDB db;
-
-    private final int GET_GALLERY_IMAGE = 200;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

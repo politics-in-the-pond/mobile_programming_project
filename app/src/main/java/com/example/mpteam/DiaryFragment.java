@@ -15,12 +15,13 @@ import androidx.fragment.app.Fragment;
 public class DiaryFragment extends Fragment {
 
     ViewGroup viewGroup;
-    LinearLayout btn1,btn2,btn3,btn4;
+    LinearLayout btn1, btn2, btn3, btn4;
+
     @SuppressLint("UseCompatLoadingForDrawables")
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        viewGroup = (ViewGroup) inflater.inflate(R.layout.fragment_diary,container,false);
+        viewGroup = (ViewGroup) inflater.inflate(R.layout.fragment_diary, container, false);
 
 
         btn1 = viewGroup.findViewById(R.id.btn1);
@@ -29,9 +30,9 @@ public class DiaryFragment extends Fragment {
             public void onClick(View v) {
                 String name = "달";
                 String period = "일주일";
-                Intent intent = new Intent(getActivity(),StartActivity.class);
-                intent.putExtra("name",name);
-                intent.putExtra("period",period);
+                Intent intent = new Intent(getActivity(), StartActivity.class);
+                intent.putExtra("name", name);
+                intent.putExtra("period", period);
                 startActivity(intent);
             }
         });
@@ -41,9 +42,9 @@ public class DiaryFragment extends Fragment {
             public void onClick(View v) {
                 String name = "화성";
                 String period = "2주";
-                Intent intent = new Intent(getActivity(),StartActivity.class);
-                intent.putExtra("name",name);
-                intent.putExtra("period",period);
+                Intent intent = new Intent(getActivity(), StartActivity.class);
+                intent.putExtra("name", name);
+                intent.putExtra("period", period);
                 startActivity(intent);
             }
         });
@@ -53,9 +54,9 @@ public class DiaryFragment extends Fragment {
             public void onClick(View v) {
                 String name = "토성";
                 String period = "3주";
-                Intent intent = new Intent(getActivity(),StartActivity.class);
-                intent.putExtra("name",name);
-                intent.putExtra("period",period);
+                Intent intent = new Intent(getActivity(), StartActivity.class);
+                intent.putExtra("name", name);
+                intent.putExtra("period", period);
                 startActivity(intent);
             }
         });
@@ -65,9 +66,9 @@ public class DiaryFragment extends Fragment {
             public void onClick(View v) {
                 String name = "천왕성";
                 String period = "한달";
-                Intent intent = new Intent(getActivity(),StartActivity.class);
-                intent.putExtra("name",name);
-                intent.putExtra("period",period);
+                Intent intent = new Intent(getActivity(), StartActivity.class);
+                intent.putExtra("name", name);
+                intent.putExtra("period", period);
                 startActivity(intent);
             }
         });

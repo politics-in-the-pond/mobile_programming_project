@@ -21,6 +21,8 @@ import java.util.Calendar;
 public class DiaryActivity2 extends AppCompatActivity {
 
     MaterialCalendarView materialCalendarView;
+    int standardSize_X, standardSize_Y;
+    float density;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +53,7 @@ public class DiaryActivity2 extends AppCompatActivity {
                 int Day = date.getDay();
                 String shot_Day = Year + "/" + Month + "/" + Day;
                 Intent intent = new Intent(DiaryActivity2.this, DiaryActivity3.class);
-                intent.putExtra("day",shot_Day);
+                intent.putExtra("day", shot_Day);
                 startActivity(intent);
             }
         });
@@ -61,15 +63,12 @@ public class DiaryActivity2 extends AppCompatActivity {
         Display display = activity.getWindowManager().getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
-        return  size;
+        return size;
     }
-
-    int standardSize_X, standardSize_Y;
-    float density;
 
     public void getStandardSize() {
         Point ScreenSize = getScreenSize(this);
-        density  = getResources().getDisplayMetrics().density;
+        density = getResources().getDisplayMetrics().density;
 
         standardSize_X = (int) (ScreenSize.x / density);
         standardSize_Y = (int) (ScreenSize.y / density);

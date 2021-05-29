@@ -2,10 +2,8 @@ package com.example.mpteam.modules;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.lang.reflect.Array;
 
 public class FileIO {
     public void FileWriter(File file, byte[] b) {

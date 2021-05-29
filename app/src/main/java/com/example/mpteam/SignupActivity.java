@@ -39,10 +39,10 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
     Button buttonSignup;
     ImageView buttonBack;
     TextView textviewMessage;
-    private TextView yourAccount, create;
     ProgressDialog progressDialog;
     FirebaseAuth firebaseAuth;
     FirebaseUser firebaseUser;
+    private TextView yourAccount, create;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -138,8 +138,8 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
                             ArrayList<String> userPosts = new ArrayList<String>();
                             ArrayList<Integer> userCards = new ArrayList<Integer>();
                             firebaseUser = firebaseAuth.getCurrentUser();
-                            DataDB db  = new DataDB();
-                            db.setUserData(new UserData(firebaseUser.getUid(), editTextSignUpNickname.getText().toString(),"", userPosts, userCards));
+                            DataDB db = new DataDB();
+                            db.setUserData(new UserData(firebaseUser.getUid(), editTextSignUpNickname.getText().toString(), "", userPosts, userCards));
                             finish();
                             startActivity(new Intent(getApplicationContext(), MainActivity.class));
                         } else {

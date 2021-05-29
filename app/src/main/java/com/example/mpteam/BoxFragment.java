@@ -18,7 +18,7 @@ public class BoxFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        viewGroup = (ViewGroup) inflater.inflate(R.layout.fragment_box,container,false);
+        viewGroup = (ViewGroup) inflater.inflate(R.layout.fragment_box, container, false);
 
 
         return viewGroup;

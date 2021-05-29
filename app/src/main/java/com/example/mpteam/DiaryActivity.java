@@ -13,6 +13,7 @@ public class DiaryActivity extends AppCompatActivity {
     String day;
     TextView day_text;
     Button next_btn;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

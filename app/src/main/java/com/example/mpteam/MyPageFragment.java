@@ -1,6 +1,5 @@
 package com.example.mpteam;
 
-import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -26,8 +25,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.example.mpteam.data.PostData;
-import com.example.mpteam.data.UserData;
 import com.example.mpteam.modules.DataDB;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -48,7 +45,6 @@ import com.google.firebase.storage.UploadTask;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
@@ -57,7 +53,6 @@ import static android.app.Activity.RESULT_OK;
 
 public class MyPageFragment extends Fragment {
 
-    private FirebaseAuth mAuth;
     ViewGroup viewGroup;
     FirebaseFirestore firebaseFirestore;
     DocumentReference docRef;
@@ -80,6 +75,7 @@ public class MyPageFragment extends Fragment {
     AlertDialog logout_dialog;
     Uri file;
     Bitmap image;
+    private FirebaseAuth mAuth;
 
     public void create_logout_dialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -174,7 +170,7 @@ public class MyPageFragment extends Fragment {
         builder.setPositiveButton("적용",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
-                        if(file==null) return;
+                        if (file == null) return;
                         FirebaseStorage storage = FirebaseStorage.getInstance();
                         StorageReference storageRef = storage.getReference();
                         UploadTask uploadTask;
@@ -339,6 +335,7 @@ public class MyPageFragment extends Fragment {
                             DocumentSnapshot document = task.getResult();
                             if (document.exists()) {
                                 String imageUrl = document.get("image").toString();
+                                Log.d("TAG", imageUrl);
                                 new DownloadFilesTask().execute(imageUrl);
                             } else {
                             }
@@ -435,11 +432,11 @@ public class MyPageFragment extends Fragment {
         }
     }
 
-    private class DownloadFilesTask extends AsyncTask<String,Void, Bitmap> {
+    private class DownloadFilesTask extends AsyncTask<String, Void, Bitmap> {
         @Override
         protected Bitmap doInBackground(String... strings) {
             Bitmap bmp = null;
-            if(strings[0] == null || strings[0].equals("")){
+            if (strings[0] == null || strings[0].equals("")) {
                 return bmp;
             }
             try {
@@ -462,11 +459,12 @@ public class MyPageFragment extends Fragment {
 
         @Override
         protected void onPostExecute(Bitmap result) {
-            if(result==null){
+            if (result == null) {
                 image = result;
                 return;
             }
-            profile.setImageBitmap(result);
+            image = result;
+            profile.setImageBitmap(image);
         }
     }
 }

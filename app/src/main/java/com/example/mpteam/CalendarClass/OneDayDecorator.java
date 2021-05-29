@@ -44,6 +44,6 @@ public class OneDayDecorator implements DayViewDecorator {
         //Add one to month {0 - 11}
         int month = calendar.get(Calendar.MONTH) + 1;
         int day = calendar.get(Calendar.DAY_OF_MONTH);
-        this.date = CalendarDay.from(year,month,day);
+        this.date = CalendarDay.from(year, month, day);
     }
 }
