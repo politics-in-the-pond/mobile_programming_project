@@ -63,92 +63,100 @@
         android:layout_width="wrap_content"
         android:layout_height="300dp"
         android:orientation="vertical">
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        <GridView
+            android:id="@+id/emotion_gridview"
+            android:numColumns="3"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+        </FrameLayout>
+<!--        <LinearLayout-->
+<!--            android:layout_weight="1"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="0dp"-->
+<!--            android:orientation="horizontal"-->
+<!--            android:weightSum="3">-->
 
-        <LinearLayout
-            android:layout_weight="1"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:orientation="horizontal"
-            android:weightSum="3">
-
-            <ImageView
-                android:src="@drawable/smile"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"/>
-
-
-            <ImageView
-                android:src="@drawable/shocked"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"/>
-
-
-            <ImageView
-                android:src="@drawable/crying"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_marginTop="20dp"
-            android:layout_weight="1"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:orientation="horizontal"
-            android:weightSum="3">
-
-            <ImageView
-                android:src="@drawable/neutral"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"/>
+<!--            <ImageView-->
+<!--                android:src="@drawable/smile"-->
+<!--                android:layout_weight="1"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="wrap_content"/>-->
 
 
-            <ImageView
-                android:src="@drawable/laughing"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"/>
+<!--            <ImageView-->
+<!--                android:src="@drawable/shocked"-->
+<!--                android:layout_weight="1"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="wrap_content"/>-->
 
 
-            <ImageView
-                android:src="@drawable/angry"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"/>
-        </LinearLayout>
+<!--            <ImageView-->
+<!--                android:src="@drawable/crying"-->
+<!--                android:layout_weight="1"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="wrap_content"/>-->
+<!--        </LinearLayout>-->
 
-        <LinearLayout
-            android:layout_marginTop="20dp"
-            android:layout_weight="1"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:orientation="horizontal"
-            android:weightSum="3">
+<!--        <LinearLayout-->
+<!--            android:layout_marginTop="20dp"-->
+<!--            android:layout_weight="1"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="0dp"-->
+<!--            android:orientation="horizontal"-->
+<!--            android:weightSum="3">-->
 
-            <ImageView
-                android:src="@drawable/happy"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"/>
-
-
-            <ImageView
-                android:src="@drawable/disappointment"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"/>
+<!--            <ImageView-->
+<!--                android:src="@drawable/neutral"-->
+<!--                android:layout_weight="1"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="wrap_content"/>-->
 
 
-            <ImageView
-                android:src="@drawable/sad"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"/>
-        </LinearLayout>
+<!--            <ImageView-->
+<!--                android:src="@drawable/laughing"-->
+<!--                android:layout_weight="1"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="wrap_content"/>-->
+
+
+<!--            <ImageView-->
+<!--                android:src="@drawable/angry"-->
+<!--                android:layout_weight="1"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="wrap_content"/>-->
+<!--        </LinearLayout>-->
+
+<!--        <LinearLayout-->
+<!--            android:layout_marginTop="20dp"-->
+<!--            android:layout_weight="1"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="0dp"-->
+<!--            android:orientation="horizontal"-->
+<!--            android:weightSum="3">-->
+
+<!--            <ImageView-->
+<!--                android:src="@drawable/happy"-->
+<!--                android:layout_weight="1"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="wrap_content"/>-->
+
+
+<!--            <ImageView-->
+<!--                android:src="@drawable/disappointment"-->
+<!--                android:layout_weight="1"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="wrap_content"/>-->
+
+
+<!--            <ImageView-->
+<!--                android:src="@drawable/sad"-->
+<!--                android:layout_weight="1"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="wrap_content"/>-->
+<!--        </LinearLayout>-->
     </LinearLayout>
 
     <TextView
@@ -160,7 +168,7 @@
         android:layout_gravity="center"
         android:text="내 감정 상태의 주원인은?"/>
 
-    <TextView
+    <EditText
         android:layout_marginTop="10dp"
         android:textSize="20dp"
         android:textColor="#ffffff"
