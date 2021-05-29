@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserData implements Serializable {
-    String userId, nickname;
+    String userId, nickname, image;
     ArrayList<String> userPosts; //public 글만 사용예정
     ArrayList<Integer> cardIndex;
 

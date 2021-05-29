@@ -49,6 +49,9 @@
 
 
            <ImageView
+               android:id="@+id/imageview"
+               android:maxHeight="500px"
+               android:maxWidth="500px"
                android:layout_width="130dp"
                android:layout_height="130dp"
                android:src="@drawable/ic_outline_account_circle_24"></ImageView>
@@ -119,6 +122,17 @@
                android:text="닉네임 변경"
                android:gravity="left"
                android:layout_marginTop="20dp"
+               android:paddingLeft="20dp"
+               android:textSize="20dp"
+               android:textColor="@color/white"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               />
+           <Button
+               style="@style/Widget.AppCompat.Button.Borderless"
+               android:text="프로필사진 변경"
+               android:id="@+id/change_image"
+               android:gravity="left"
                android:paddingLeft="20dp"
                android:textSize="20dp"
                android:textColor="@color/white"
