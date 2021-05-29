@@ -6,6 +6,9 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+
+
     <application
 
         android:usesCleartextTraffic="true"
@@ -26,6 +29,12 @@
         <activity android:name="com.example.mpteam.DiaryActivity2" />
         <activity android:name="com.example.mpteam.DiaryActivity" />
         <activity android:name="com.example.mpteam.StartActivity" />
+        <activity android:name="com.example.mpteam.MapActivity"/>
+
+        <uses-library
+            android:name="org.apache.http.legacy"
+            android:required="false"/>
+
         <activity
             android:name="com.example.mpteam.SplashActivity"
             android:theme="@style/FullScreenTheme"
@@ -37,6 +46,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyCS2vgoSfPIGL19QgWrCsbx4CALL10nH-c" />
     </application>
 
 </manifest>
