@@ -191,6 +191,7 @@
                />
            <Button
                style="@style/Widget.AppCompat.Button.Borderless"
+               android:id="@+id/btn_emotion_statics"
                android:text="감정 통계"
                android:gravity="left"
                android:layout_marginTop="20dp"
