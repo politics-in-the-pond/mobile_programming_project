@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentManager;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -23,8 +24,19 @@ import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
+
+import java.util.ArrayList;
 
 public class MapActivity extends AppCompatActivity {
+
+    ArrayList<Double> lon_list;
+    ArrayList<Double> lat_list;
+    ArrayList<String> name_list;
+    ArrayList<Bitmap> images_list;
+    ArrayList<Marker> marker_list;
+
 
     String [] permission_list = {
             Manifest.permission.ACCESS_FINE_LOCATION,
@@ -34,7 +46,7 @@ public class MapActivity extends AppCompatActivity {
 
     LocationManager locationManager;
     GoogleMap map;
-    MapView mapView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -142,6 +154,7 @@ public class MapActivity extends AppCompatActivity {
 
         // 현재 위치 표시
         map.setMyLocationEnabled(true);
+        map.addMarker(new MarkerOptions().position(position).title("내 위치"));
 
     }
 
