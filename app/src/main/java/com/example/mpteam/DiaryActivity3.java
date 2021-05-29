@@ -11,28 +11,19 @@ import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
-import androidx.databinding.Observable;
 
 import com.example.mpteam.data.PostData;
 import com.example.mpteam.databinding.ActivityDiary3Binding;
-import com.google.android.gms.common.util.DataUtils;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.firestore.DocumentReference;
 import com.example.mpteam.modules.DataDB;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.util.ArrayList;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import lombok.NonNull;
 
@@ -43,7 +34,7 @@ public class DiaryActivity3 extends AppCompatActivity {
     ImageView gallery;
     ActivityDiary3Binding binding;
     SharedPreferences pref;
-    Uri file;
+    Uri file = null;
     PostData post;
     FirebaseUser user;
     DataDB db;
@@ -90,46 +81,69 @@ public class DiaryActivity3 extends AppCompatActivity {
                 StorageReference storageRef = storage.getReference();
                 UploadTask uploadTask;
 
-                StorageReference imageRef = storageRef.child("images/" + file.getLastPathSegment());
-                uploadTask = (UploadTask) imageRef.putFile(file).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception exception) {
-                    }
-                }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        imageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                            @Override
-                            public void onSuccess(Uri uri) {
-                                Uri imageUrl = uri;
-                                Log.d("TAG", imageUrl.toString());
+                if (file != null) {
+                    StorageReference imageRef = storageRef.child("images/" + file.getLastPathSegment());
+                    uploadTask = (UploadTask) imageRef.putFile(file).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception exception) {
 
-                                post = new PostData();
-                                post.setUserId(user.getUid());
-                                post.setTitle("제목");
-                                post.setContent(binding.writing.getText().toString());
-                                post.setDateTime(day);
-                                post.setIspublic(false);
-                                post.setLatitude(3.14);
-                                post.setLongitude(3.14);
-                                post.setEmotion(1);
-                                post.setImageURL(new ArrayList<String>());
-                                post.addImageURL(imageUrl.toString());
+                        }
+                    }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            imageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
+                                    Uri imageUrl = uri;
 
-                                db.setPostData(post);
+                                    Log.d("TAG", imageUrl.toString());
 
-                                Intent intent = new Intent(DiaryActivity3.this, DiaryActivity4.class);
-                                startActivity(intent);
-                                finish();
-                            }
-                        });
-                    }
-                });
+                                    post = new PostData();
+                                    post.setUserId(user.getUid());
+                                    post.setTitle("제목");
+                                    post.setContent(binding.writing.getText().toString());
+                                    post.setDateTime(day);
+                                    post.setIspublic(false);
+                                    post.setLatitude(3.14);
+                                    post.setLongitude(3.14);
+                                    post.setEmotion(1);
+                                    post.setImageURL(new ArrayList<String>());
+                                    post.addImageURL(imageUrl.toString());
+
+                                    db.setPostData(post);
+
+                                    Intent intent = new Intent(DiaryActivity3.this, DiaryActivity4.class);
+                                    startActivity(intent);
+                                    finish();
+                                }
+                            });
+                        }
+                    });
+                } else {
+                    post = new PostData();
+                    post.setUserId(user.getUid());
+                    post.setTitle("제목");
+                    post.setContent(binding.writing.getText().toString());
+                    post.setDateTime(day);
+                    post.setIspublic(false);
+                    post.setLatitude(3.14);
+                    post.setLongitude(3.14);
+                    post.setEmotion(1);
+                    post.setImageURL(new ArrayList<String>());
+                    post.addImageURL("");
+
+                    db.setPostData(post);
+
+                    Intent intent = new Intent(DiaryActivity3.this, DiaryActivity4.class);
+                    startActivity(intent);
+                    finish();
+                }
             }
         });
 
         binding.map.setOnClickListener(new Map());
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -140,9 +154,7 @@ public class DiaryActivity3 extends AppCompatActivity {
     }
 
 
-
-
-    private class Map implements View.OnClickListener{
+    private class Map implements View.OnClickListener {
         @Override
         public void onClick(View v) {
             Intent mapIntent = new Intent(DiaryActivity3.this, MapActivity.class);
