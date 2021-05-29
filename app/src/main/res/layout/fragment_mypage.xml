@@ -9,42 +9,54 @@
        android:layout_width="match_parent"
        android:layout_height="match_parent"
        android:orientation="vertical">
-       <RelativeLayout
+       <LinearLayout
            android:layout_width="match_parent"
            android:layout_height="wrap_content"
            android:padding="10dp">
 
            <ImageView
-               android:layout_marginLeft="25dp"
-               android:layout_centerVertical="true"
-               android:layout_alignParentLeft="true"
                android:layout_width="60dp"
                android:layout_height="60dp"
-               android:src="@drawable/gauge"/>
+               android:layout_alignParentLeft="true"
+               android:layout_centerVertical="true"
+               android:layout_marginLeft="25dp"
+               android:src="@drawable/gauge" />
 
            <ProgressBar
-               android:layout_centerHorizontal="true"
                android:id="@+id/progress"
-               android:progress="40"
                style="@android:style/Widget.ProgressBar.Horizontal"
-               android:layout_centerVertical="true"
                android:layout_width="200dp"
-               android:max="100"
-               android:layout_height="wrap_content"/>
-
-           <Button
-               android:background="@drawable/custom_btn"
+               android:layout_height="wrap_content"
+               android:layout_gravity="center"
+               android:layout_centerHorizontal="true"
                android:layout_centerVertical="true"
-               android:layout_alignParentRight="true"
+               android:max="100"
+               android:progress="40" />
+           <LinearLayout
                android:layout_width="wrap_content"
                android:layout_height="wrap_content"
-               android:text="사용"/>
-       </RelativeLayout>
+               android:orientation="vertical"
+               android:layout_marginLeft="10dp">
+               <Button
+                   android:layout_width="60dp"
+                   android:layout_height="30dp"
+                   android:layout_margin="1dp"
+                   android:background="@drawable/custom_btn"
+                   android:text="저장" />
+
+               <Button
+                   android:layout_width="60dp"
+                   android:layout_height="30dp"
+                   android:layout_margin="1dp"
+                   android:background="@drawable/custom_btn"
+                   android:text="사용" />
+           </LinearLayout>
+       </LinearLayout>
 
        <LinearLayout
            android:layout_width="match_parent"
            android:layout_height="wrap_content"
-           android:padding="20dp"
+           android:padding="10dp"
            android:orientation="horizontal">
 
 
@@ -52,13 +64,13 @@
                android:id="@+id/imageview"
                android:maxHeight="500px"
                android:maxWidth="500px"
-               android:layout_width="130dp"
-               android:layout_height="130dp"
+               android:layout_width="100dp"
+               android:layout_height="100dp"
                android:src="@drawable/ic_outline_account_circle_24"></ImageView>
 
            <LinearLayout
                android:layout_marginLeft="15dp"
-               android:layout_marginTop="25dp"
+               android:layout_marginTop="10dp"
                android:layout_width="match_parent"
                android:layout_height="wrap_content"
                android:orientation="vertical"
@@ -76,6 +88,7 @@
                        android:layout_width="wrap_content"
                        android:layout_height="wrap_content"
                        android:text="닉네임"
+                       android:textStyle="bold"
                        android:textSize="20dp"
                        android:textColor="#ffffff"/>
 
@@ -92,7 +105,7 @@
                        android:layout_width="wrap_content"
                        android:layout_height="wrap_content"
                        android:text="Email"
-                       android:textSize="20dp"
+                       android:textSize="15dp"
                        android:textColor="#ffffff"/>
 
                </RelativeLayout>

@@ -6,47 +6,59 @@
     android:orientation="vertical"
     android:layout_height="match_parent">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="10dp">
 
         <ImageView
-            android:layout_marginLeft="25dp"
-            android:layout_centerVertical="true"
-            android:layout_alignParentLeft="true"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:src="@drawable/gauge"/>
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="25dp"
+            android:src="@drawable/gauge" />
 
         <ProgressBar
-            android:layout_centerHorizontal="true"
             android:id="@+id/progress"
-            android:progress="40"
             style="@android:style/Widget.ProgressBar.Horizontal"
-            android:layout_centerVertical="true"
             android:layout_width="200dp"
-            android:max="100"
-            android:layout_height="wrap_content"/>
-
-        <Button
-            android:background="@drawable/custom_btn"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:layout_alignParentRight="true"
+            android:max="100"
+            android:progress="40" />
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="사용"/>
-    </RelativeLayout>
+            android:orientation="vertical"
+            android:layout_marginLeft="10dp">
+            <Button
+                android:layout_width="60dp"
+                android:layout_height="30dp"
+                android:layout_margin="1dp"
+                android:background="@drawable/custom_btn"
+                android:text="저장" />
+
+            <Button
+                android:layout_width="60dp"
+                android:layout_height="30dp"
+                android:layout_margin="1dp"
+                android:background="@drawable/custom_btn"
+                android:text="사용" />
+        </LinearLayout>
+    </LinearLayout>
 
     <ImageView
-        android:layout_width="110dp"
-        android:layout_height="110dp"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
         android:layout_gravity="center"
         android:src="@drawable/ic_outline_location_on_24"/>
 
     <TextView
         android:layout_marginTop="10dp"
-        android:textSize="35dp"
+        android:textSize="30dp"
         android:textColor="#ffffff"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -57,7 +69,7 @@
     <LinearLayout
         android:weightSum="2"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="420dp"
         android:orientation="vertical"
         android:padding="30dp">
 
@@ -77,8 +89,8 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    android:layout_width="130dp"
-                    android:layout_height="130dp"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
                     android:src="@drawable/moon"/>
 
                 <LinearLayout
@@ -111,8 +123,8 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    android:layout_width="130dp"
-                    android:layout_height="130dp"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
                     android:src="@drawable/mars"/>
 
                 <LinearLayout
@@ -155,8 +167,8 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    android:layout_width="130dp"
-                    android:layout_height="130dp"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
                     android:src="@drawable/saturn"/>
 
                 <LinearLayout
@@ -190,8 +202,8 @@
 
 
                 <ImageView
-                    android:layout_width="130dp"
-                    android:layout_height="130dp"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
                     android:src="@drawable/uranus"/>
 
 
@@ -212,7 +224,7 @@
                         android:textColor="#ffffff"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="(한달)"/>
+                        android:text="(4주)"/>
                 </LinearLayout>
             </LinearLayout>
 
