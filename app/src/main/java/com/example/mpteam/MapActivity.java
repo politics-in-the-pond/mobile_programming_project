@@ -17,6 +17,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.google.android.gms.common.api.internal.GoogleApiManager;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -31,7 +32,8 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
 
-public class MapActivity extends AppCompatActivity {
+public class MapActivity extends AppCompatActivity implements OnMapReadyCallback,
+        GoogleMap.OnMarkerClickListener {
 
     ArrayList<Double> lng_list;
     ArrayList<Double> lat_list;
@@ -39,13 +41,21 @@ public class MapActivity extends AppCompatActivity {
     ArrayList<Bitmap> images_list;
     ArrayList<Marker> marker_list;
 
-
+    // DiaryActvity3에서 받아오는 것
+    Intent intent;
+    String title;
 
     String [] permission_list = {
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.ACCESS_FINE_LOCATION,
             Manifest.permission.ACCESS_COARSE_LOCATION
     };
+
+    @Override
+    public boolean onMarkerClick(@NonNull  Marker marker) {
+        return false;
+    }
+
 
 
     LocationManager locationManager;
@@ -59,19 +69,30 @@ public class MapActivity extends AppCompatActivity {
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
             requestPermissions(permission_list, 0);
         }else{
-            new MapThread().start();
+            init();
+
+            marker_list = new ArrayList<>();
+            lng_list = new ArrayList<>();
+            lat_list = new ArrayList<>();
+            name_list = new ArrayList<>();
+            images_list = new ArrayList<>();
+
         }
     }
 
-    public class MapThread extends Thread{
-        @Override
-        public void run() {
-            super.run();
+    @Override
+    public void onMapReady(@NonNull  GoogleMap googleMap) {
+        map = googleMap;
+        getMyLocation();
 
-            init();
-
-
-        }
+        googleMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
+            @Override
+            public void onMapLongClick(@NonNull LatLng latLng) {
+                MarkerOptions marker = new MarkerOptions().position(latLng);
+                marker.title(title).draggable(true);
+                map.addMarker(marker);
+            }
+        });
     }
 
 
@@ -91,21 +112,22 @@ public class MapActivity extends AppCompatActivity {
     public void init(){
         FragmentManager fragmentManager = this.getSupportFragmentManager();
         SupportMapFragment mapFragment = (SupportMapFragment)fragmentManager.findFragmentById(R.id.GoogleMap);
+        intent = getIntent();
+
+        title = intent.getStringExtra("title");
 
 
-        MapReadyCallback callback1 = new MapReadyCallback();
-        mapFragment.getMapAsync(callback1);
+        mapFragment.getMapAsync(this::onMapReady);
     }
 
-    // 구글 지도 사용 준비가 완료되면 동작하는 콜백
-    class MapReadyCallback implements OnMapReadyCallback {
-        @Override
-        public void onMapReady(@NonNull GoogleMap googleMap) {
-            map = googleMap;
-            //            Log.d("test123", "onMapReady: 구글지도 사용 준비 완료 ");
-            getMyLocation();
-        }
+
+    
+    
+    // 구글맵에 표시된 정보 전부 지움
+    public void setGoogleMapClear() {
+        map.clear();
     }
+    
 
     // 현재 위치를 측정하는 메서드
     public void getMyLocation(){
@@ -136,33 +158,7 @@ public class MapActivity extends AppCompatActivity {
         }
     }
 
-    public void setMyLocation(Location location){
-        String TAG = "test123";
-        Log.d(TAG, "위도: " + location.getLatitude());
-        Log.d(TAG, "경도도: " + location.getLongitude());
-
-        // 위도와 경도값을 관리하는 객체
-        LatLng position = new LatLng(location.getLatitude(), location.getLongitude());
-
-        // 위성 카메라의 위치를 옮긴다.
-        CameraUpdate update1 = CameraUpdateFactory.newLatLng(position);
-        CameraUpdate update2 = CameraUpdateFactory.zoomTo(15f);     // 현재보다 15배 확대
-
-        map.moveCamera(update1);
-        map.animateCamera(update2);
-
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
-            if(checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_DENIED)
-                return;
-        }
-
-
-        // 현재 위치 표시
-        map.setMyLocationEnabled(true);
-        map.addMarker(new MarkerOptions().position(position).title("내 위치"));
-    }
-
-    // 현재 위치 측정이 성공하면 반응하는 리스너
+    // 현재 위치 측정이 성공하면 반응하는 리스너 Location 이 변경되면 setMyLocation 위치변경
     class GetMyLocationListener implements LocationListener{
         @Override
         public void onStatusChanged(String provider, int status, Bundle extras) {
@@ -183,6 +179,45 @@ public class MapActivity extends AppCompatActivity {
             setMyLocation(location);
             locationManager.removeUpdates(this);
             //위치 측정 중단.
+        }
+    }
+
+
+    public void setMyLocation( Location location){
+        String TAG = "test123";
+        Log.d(TAG, "위도: " + location.getLatitude());
+        Log.d(TAG, "경도도: " + location.getLongitude());
+
+        // 위도와 경도값을 관리하는 객체
+        LatLng position = new LatLng(location.getLatitude(), location.getLongitude());
+
+        // 위성 카메라의 위치를 옮긴다.
+        CameraUpdate update1 = CameraUpdateFactory.newLatLng(position);
+        CameraUpdate update2 = CameraUpdateFactory.zoomTo(20f);     // 현재보다 15배 확대
+
+        map.moveCamera(update1);
+        map.animateCamera(update2);
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+            if(checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_DENIED)
+                return;
+        }
+
+
+        // 현재 위치 표시
+        map.setMyLocationEnabled(true);
+//        map.addMarker(new MarkerOptions().position(position).title("내 위치"));
+
+    }
+
+
+
+    // 조회하는 쪽 onMapReady에 넣어야함
+    // 일기 조회할 때 마커 띄우기 여기서 쓰는 함수는 아니지만 미리 구현
+    public void getMarkers(){
+        String TAG = "GetMarkers";
+        for(Marker marker : marker_list){
+            Log.d(TAG, " " + marker.getTitle());
+            map.addMarker(new MarkerOptions().position(marker.getPosition()).title(marker.getTitle()));
         }
     }
 

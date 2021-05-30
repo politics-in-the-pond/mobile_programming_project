@@ -8,10 +8,12 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
+import com.example.mpteam.data.MarkerModel;
 import com.example.mpteam.data.PostData;
 import com.example.mpteam.databinding.ActivityDiary3Binding;
 import com.example.mpteam.modules.DataDB;
@@ -153,11 +155,26 @@ public class DiaryActivity3 extends AppCompatActivity {
         }
     }
 
+    public int checkNumberofCharacters(String title){
+        if(title.length() == 0){
+            Toast.makeText(getApplicationContext(),"한 글자라도 써주세요.",Toast.LENGTH_SHORT).show();
+            return 0;
+        }
+
+        return (title.length() < 15)?title.length():15;
+    }
+
 
     private class Map implements View.OnClickListener {
         @Override
         public void onClick(View v) {
             Intent mapIntent = new Intent(DiaryActivity3.this, MapActivity.class);
+            String title = binding.writing.getText().toString();
+
+            int len = checkNumberofCharacters(title);
+            if(len == 0) return;
+
+            mapIntent.putExtra("title", title.substring(0, len) + "...");
             startActivity(mapIntent);
         }
     }
