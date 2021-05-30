@@ -2,11 +2,14 @@ package com.example.mpteam;
 
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -20,12 +23,26 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import java.util.ArrayList;
 
 public class MapActivity extends AppCompatActivity {
 
+    ArrayList<Double> lng_list;
+    ArrayList<Double> lat_list;
+    ArrayList<String> name_list;
+    ArrayList<Bitmap> images_list;
+    ArrayList<Marker> marker_list;
+
+
+
     String [] permission_list = {
+            Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.ACCESS_FINE_LOCATION,
             Manifest.permission.ACCESS_COARSE_LOCATION
     };
@@ -164,8 +181,12 @@ public class MapActivity extends AppCompatActivity {
         @Override
         public void onLocationChanged(@NonNull Location location) {
             setMyLocation(location);
+            locationManager.removeUpdates(this);
             //위치 측정 중단.
         }
     }
+
+
+
 
 }
