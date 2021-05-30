@@ -58,7 +58,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         marker.showInfoWindow();
         return true;
     }
-    
+
 
 
     @Override
