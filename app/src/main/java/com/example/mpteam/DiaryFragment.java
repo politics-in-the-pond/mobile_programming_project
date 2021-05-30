@@ -54,11 +54,12 @@ public class DiaryFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 String name = "달";
-                String period = "일주일";
+                String period = "7";
                 Intent intent = new Intent(getActivity(), StartActivity.class);
                 intent.putExtra("name", name);
                 intent.putExtra("period", period);
-                startActivity(intent);
+                intent.putExtra("image",R.drawable.moon);
+                getActivity().startActivityForResult(intent,0);
             }
         });
         btn2 = viewGroup.findViewById(R.id.btn2);
@@ -66,11 +67,12 @@ public class DiaryFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 String name = "화성";
-                String period = "2주";
+                String period = "14";
                 Intent intent = new Intent(getActivity(), StartActivity.class);
                 intent.putExtra("name", name);
                 intent.putExtra("period", period);
-                startActivity(intent);
+                intent.putExtra("image",R.drawable.mars);
+                getActivity().startActivityForResult(intent,0);
             }
         });
         btn3 = viewGroup.findViewById(R.id.btn3);
@@ -78,11 +80,12 @@ public class DiaryFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 String name = "토성";
-                String period = "3주";
+                String period = "21";
                 Intent intent = new Intent(getActivity(), StartActivity.class);
                 intent.putExtra("name", name);
                 intent.putExtra("period", period);
-                startActivity(intent);
+                intent.putExtra("image",R.drawable.saturn);
+                getActivity().startActivityForResult(intent,0);
             }
         });
         btn4 = viewGroup.findViewById(R.id.btn4);
@@ -90,11 +93,12 @@ public class DiaryFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 String name = "천왕성";
-                String period = "한달";
+                String period = "30";
                 Intent intent = new Intent(getActivity(), StartActivity.class);
                 intent.putExtra("name", name);
                 intent.putExtra("period", period);
-                startActivity(intent);
+                intent.putExtra("image",R.drawable.uranus);
+                getActivity().startActivityForResult(intent,0);
             }
         });
         btn_useCoin = (Button) viewGroup.findViewById(R.id.useCoin);
@@ -115,22 +119,35 @@ public class DiaryFragment extends Fragment {
         return viewGroup;
     }
 
+    @Override
+    public void onResume(){
+        super.onResume();
+        refresh();
+    }
+
+
     public void refresh(){
         db.collection("streak").document(user.getUid()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 DocumentSnapshot document = task.getResult();
-                DiaryStreak ds = new DiaryStreak(user.getUid(),document.get("startDay").toString(), document.get("lastDay").toString(), Integer.parseInt(document.get("gauge").toString()));
+                DiaryStreak ds = new DiaryStreak(user.getUid(),document.get("startDay").toString(), document.get("lastDay").toString(), Integer.parseInt(document.get("gauge").toString()), Integer.parseInt(document.get("period").toString()));
                 if(DateModule.compareDay(ds.getLastDay(),DateModule.getToday())>1){
                     Toast.makeText(getContext(),"임무 실패!",Toast.LENGTH_SHORT).show();
                 }
-                if(ds.getGauge()/7>0){
+                if(ds.getGauge()/7>2){
+                    coinImage.setImageResource(R.drawable.fuel_coin_yellow);
+                    coin.setText("  x" + Integer.toString(3));
+                    progressBar.setProgress(7);
+                } else if(ds.getGauge()/7>0) {
                     coinImage.setImageResource(R.drawable.fuel_coin_green);
-                } else{
+                    coin.setText("  x" + Integer.toString(ds.getGauge() / 7));
+                    progressBar.setProgress(ds.getGauge() % 7);
+                } else {
                     coinImage.setImageResource(R.drawable.gauge);
+                    coin.setText("  x" + Integer.toString(ds.getGauge() / 7));
+                    progressBar.setProgress(ds.getGauge() % 7);
                 }
-                coin.setText("  x"+Integer.toString(ds.getGauge()/7));
-                progressBar.setProgress(ds.getGauge()%7);
             }
         });
     }

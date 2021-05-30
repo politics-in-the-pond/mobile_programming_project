@@ -59,7 +59,7 @@ public class DataDB {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 DocumentSnapshot document = task.getResult();
-                DiaryStreak ds = new DiaryStreak(user.getUid(), document.get("startDay").toString(), document.get("lastDay").toString(), Integer.parseInt(document.get("gauge").toString()));
+                DiaryStreak ds = new DiaryStreak(user.getUid(), document.get("startDay").toString(), document.get("lastDay").toString(), Integer.parseInt(document.get("gauge").toString()), Integer.parseInt(document.get("period").toString()));
                 if (DateModule.compareDay(document.get("lastDay").toString(), DateModule.getToday()) > 1) { //하루이상 안썼을 때
                     Log.d("DataDB", "Game Over"); //게임오버 추가
                 }
@@ -86,7 +86,7 @@ public class DataDB {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 DocumentSnapshot document = task.getResult();
-                DiaryStreak ds = new DiaryStreak(document.get("userId").toString(), document.get("startDay").toString(),  document.get("lastDay").toString(), Integer.parseInt(document.get("gauge").toString()));
+                DiaryStreak ds = new DiaryStreak(document.get("userId").toString(), document.get("startDay").toString(),  document.get("lastDay").toString(), Integer.parseInt(document.get("gauge").toString()), Integer.parseInt(document.get("period").toString()));
                 if (DateModule.compareDay(ds.getLastDay(), DateModule.getToday()) == 0) {
                     Toast.makeText(context, "이미 오늘 일기를 썼습니다.", Toast.LENGTH_SHORT).show();
                     Log.d("DataDB", "저런 오늘은 일기를 쓰셨네요!");
@@ -115,7 +115,7 @@ public class DataDB {
     }
 
     public void clearStreak() {
-        DiaryStreak ds = new DiaryStreak(user.getUid(), "", "", 0);
+        DiaryStreak ds = new DiaryStreak(user.getUid(), "", "", 0, -1);
         db.collection("streak").document(user.getUid()).set(ds);
     }
 

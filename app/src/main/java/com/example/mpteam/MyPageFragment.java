@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,7 +26,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.mpteam.data.DiaryStreak;
 import com.example.mpteam.modules.DataDB;
+import com.example.mpteam.modules.DateModule;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -68,7 +71,6 @@ public class MyPageFragment extends Fragment {
     Button btn_change_pw;
     Button btn_logout;
     Button btn_emotion_statics;
-    Button btn_useCoin;
     AlertDialog nickname_change_dialog;
     AlertDialog email_change_dialog;
     AlertDialog image_change_dialog;
@@ -78,6 +80,10 @@ public class MyPageFragment extends Fragment {
     Uri file;
     Bitmap image;
     private FirebaseAuth mAuth;
+    Button btn_useCoin;
+    ImageView coinImage;
+    TextView coin;
+    ProgressBar progressBar;
 
     public void create_logout_dialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -304,6 +310,12 @@ public class MyPageFragment extends Fragment {
         email_change_dialog = builder.create();
     }
 
+    @Override
+    public void onResume(){
+        super.onResume();
+        refresh();
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -312,6 +324,7 @@ public class MyPageFragment extends Fragment {
         profile = viewGroup.findViewById(R.id.imageview);
         nickname = viewGroup.findViewById(R.id.Mypage_nickname);
         email = viewGroup.findViewById(R.id.Mypage_email);
+        coinImage = viewGroup.findViewById(R.id.coinImage);
         btn_change_nickname = viewGroup.findViewById(R.id.change_nickname);
         btn_change_image = viewGroup.findViewById(R.id.change_image);
         btn_change_email = viewGroup.findViewById(R.id.change_email);
@@ -319,12 +332,16 @@ public class MyPageFragment extends Fragment {
         btn_logout = viewGroup.findViewById(R.id.logout_btn);
         btn_emotion_statics = viewGroup.findViewById(R.id.btn_emotion_statics);
         btn_useCoin = viewGroup.findViewById(R.id.useCoin);
+        coin = viewGroup.findViewById(R.id.coinText);
+        progressBar = viewGroup.findViewById(R.id.progress);
         create_nickname_dialog();
         create_email_dialog();
         create_image_dialog();
         create_pw_check_dialog();
         create_pw_change_dialog();
         create_logout_dialog();
+
+        refresh();
         if (user != null) {
             // Name, email address, and profile photo Url
             DisplayNickName();
@@ -390,6 +407,12 @@ public class MyPageFragment extends Fragment {
             public void onClick(View v) {
                 DataDB data = new DataDB();
                 data.useCoin(getContext());
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                refresh();
             }
         });
         return viewGroup;
@@ -484,5 +507,31 @@ public class MyPageFragment extends Fragment {
             image = result;
             profile.setImageBitmap(image);
         }
+    }
+
+    public void refresh() {
+        db.collection("streak").document(user.getUid()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                DocumentSnapshot document = task.getResult();
+                DiaryStreak ds = new DiaryStreak(user.getUid(), document.get("startDay").toString(), document.get("lastDay").toString(), Integer.parseInt(document.get("gauge").toString()), Integer.parseInt(document.get("period").toString()));
+                if (DateModule.compareDay(ds.getLastDay(), DateModule.getToday()) > 1) {
+                    Toast.makeText(getContext(), "임무 실패!", Toast.LENGTH_SHORT).show();
+                }
+                if(ds.getGauge()/7>2){
+                    coinImage.setImageResource(R.drawable.fuel_coin_yellow);
+                    coin.setText("  x" + Integer.toString(3));
+                    progressBar.setProgress(7);
+                } else if(ds.getGauge()/7>0) {
+                    coinImage.setImageResource(R.drawable.fuel_coin_green);
+                    coin.setText("  x" + Integer.toString(ds.getGauge() / 7));
+                    progressBar.setProgress(ds.getGauge() % 7);
+                } else {
+                    coinImage.setImageResource(R.drawable.gauge);
+                    coin.setText("  x" + Integer.toString(ds.getGauge() / 7));
+                    progressBar.setProgress(ds.getGauge() % 7);
+                }
+            }
+        });
     }
 }
