@@ -115,7 +115,7 @@ public class DataDB {
     }
 
     public void clearStreak() {
-        DiaryStreak ds = new DiaryStreak(user.getUid(), "", "", 0, 0);
+        DiaryStreak ds = new DiaryStreak(user.getUid(), "", "", 0, -1);
         db.collection("streak").document(user.getUid()).set(ds);
     }
 
