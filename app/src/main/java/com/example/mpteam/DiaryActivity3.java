@@ -133,7 +133,7 @@ public class DiaryActivity3 extends AppCompatActivity {
                     post.addImageURL("");
 
                     db.setPostData(post);
-                    db.updateDiaryStreak();
+                    db.updateDiaryStreak(getApplicationContext());
                     Intent intent = new Intent(DiaryActivity3.this, DiaryActivity4.class);
                     startActivity(intent);
                     finish();

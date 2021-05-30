@@ -54,7 +54,7 @@ public class DataDB {
                 });
     }
 
-    public void updateDiaryStreak() {
+    public void updateDiaryStreak(Context context) {
         db.collection("streak").document(user.getUid()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -63,7 +63,12 @@ public class DataDB {
                 if (DateModule.compareDay(document.get("lastDay").toString(), DateModule.getToday()) > 1) { //하루이상 안썼을 때
                     Log.d("DataDB", "Game Over"); //게임오버 추가
                 }
-                ds.setGauge(ds.getGauge() + 1);
+                if (DateModule.compareDay(ds.getLastDay(), DateModule.getToday()) == 0) {
+                    Toast.makeText(context, "이미 오늘 일기를 썼습니다.", Toast.LENGTH_SHORT).show();
+                    Log.d("DataDB", "저런 오늘은 일기를 쓰셨네요!");
+                } else{
+                    ds.setGauge(ds.getGauge() + 1);
+                }
                 ds.setLastDay(DateModule.getToday());
 
                 db.collection("streak").document(user.getUid()).set(ds).addOnSuccessListener(new OnSuccessListener<Void>() {
