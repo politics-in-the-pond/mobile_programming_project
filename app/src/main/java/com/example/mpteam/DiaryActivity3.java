@@ -117,8 +117,7 @@ public class DiaryActivity3 extends AppCompatActivity {
                                     post.setImageURL(new ArrayList<String>());
                                     post.addImageURL(imageUrl.toString());
                                     db.setPostData(post);
-                                    db.updateDiaryStreak();
-
+                                    db.updateDiaryStreak(v.getContext());
                                     if(day.equals(DateModule.getToday())){
                                         db.updateDiaryStreak(getApplicationContext());
                                     }

@@ -54,7 +54,7 @@ public class DiaryFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 String name = "달";
-                String period = "일주일";
+                String period = "7";
                 Intent intent = new Intent(getActivity(), StartActivity.class);
                 intent.putExtra("name", name);
                 intent.putExtra("period", period);
@@ -67,7 +67,7 @@ public class DiaryFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 String name = "화성";
-                String period = "2주";
+                String period = "14";
                 Intent intent = new Intent(getActivity(), StartActivity.class);
                 intent.putExtra("name", name);
                 intent.putExtra("period", period);
@@ -80,7 +80,7 @@ public class DiaryFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 String name = "토성";
-                String period = "3주";
+                String period = "21";
                 Intent intent = new Intent(getActivity(), StartActivity.class);
                 intent.putExtra("name", name);
                 intent.putExtra("period", period);
@@ -93,7 +93,7 @@ public class DiaryFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 String name = "천왕성";
-                String period = "한달";
+                String period = "30";
                 Intent intent = new Intent(getActivity(), StartActivity.class);
                 intent.putExtra("name", name);
                 intent.putExtra("period", period);

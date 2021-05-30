@@ -175,13 +175,13 @@ public class MainActivity extends FragmentActivity {
                 DocumentSnapshot document = task.getResult();
                 String lastDay = document.get("lastDay").toString();
                 String startDay = document.get("startDay").toString();
-
-                if(startDay.equals(""))
+                int period = Integer.parseInt(document.get("period").toString());
+                if(period==-1)
                 {
                     SetFragment(MainState.START) ;
 
                 }
-                else if(DateModule.compareDay(startDay,lastDay)==0)
+                else if(period==0)
                 {
                     SetFragment(MainState.SUCCESS) ;
 
@@ -205,7 +205,6 @@ public class MainActivity extends FragmentActivity {
         if (requestCode == 0) {
               if (resultCode == RESULT_OK) {
                     ApplyState();
-                    viewPager.setCurrentItem(1);
              }
            } else if (requestCode == 1) {
 
