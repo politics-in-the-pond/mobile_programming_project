@@ -16,6 +16,7 @@ import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.google.android.gms.common.api.internal.GoogleApiManager;
 import com.google.android.gms.maps.CameraUpdate;
@@ -54,14 +55,16 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     @Override
     public boolean onMarkerClick(@NonNull  Marker marker) {
-        return false;
+        Toast.makeText(this, marker.getTitle() + "\n" + marker.getPosition(), Toast.LENGTH_SHORT).show();
+        marker.showInfoWindow();
+        return true;
     }
 
 
 
     LocationManager locationManager;
     GoogleMap map;
-    MapView mapView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,16 +89,20 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         map = googleMap;
         getMyLocation();
 
-        googleMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
+        map.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
             @Override
             public void onMapLongClick(@NonNull LatLng latLng) {
                 MarkerOptions marker = new MarkerOptions().position(latLng);
                 marker.title(title).draggable(true);
+                marker.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_CYAN));
                 map.addMarker(marker);
 
                 moveCameraPos(marker.getPosition());
             }
         });
+
+        map.setOnMarkerClickListener(this::onMarkerClick);
+
     }
 
     public void moveCameraPos(LatLng latLng){
