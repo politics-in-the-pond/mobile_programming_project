@@ -2,21 +2,34 @@ package com.example.mpteam;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
-import android.app.Activity;
-import android.content.Intent;
-import android.graphics.Point;
 import android.os.Bundle;
-import android.os.Debug;
+import android.os.Handler;
 import android.util.Log;
-import android.view.Display;
+import android.view.View;
+import android.widget.Button;
 
 import com.example.mpteam.CalendarClass.EmotionDecorator;
 import com.example.mpteam.CalendarClass.OneDayDecorator;
 import com.example.mpteam.CalendarClass.SaturdayDecorator;
 import com.example.mpteam.CalendarClass.SundayDecorator;
+import com.example.mpteam.GraphClass.CustomRenderer;
 import com.example.mpteam.data.Emotion;
 import com.example.mpteam.data.PostData;
+import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
+
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.formatter.IAxisValueFormatter;
+import com.github.mikephil.charting.formatter.IValueFormatter;
+
+import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
+import com.github.mikephil.charting.utils.ColorTemplate;
+import com.github.mikephil.charting.utils.ViewPortHandler;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -24,11 +37,11 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.google.type.DateTime;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -38,16 +51,15 @@ public class EmotionStaticsActivity extends AppCompatActivity {
     int standardSize_X, standardSize_Y;
     float density;
     ArrayList<PostData> posts;
-    ArrayList<CalendarDay> happy_day;
-    ArrayList<CalendarDay> smile_day;
-    ArrayList<CalendarDay> laughing_day;
-    ArrayList<CalendarDay> neutral_day;
-    ArrayList<CalendarDay> disapointment_day;
-    ArrayList<CalendarDay> sad_day;
-    ArrayList<CalendarDay> shocked_day;
-    ArrayList<CalendarDay> angry_day;
-    ArrayList<CalendarDay> crying_day;
-
+    ArrayList<CalendarDay> happy_day= new ArrayList<>();
+    ArrayList<CalendarDay> smile_day= new ArrayList<>();
+    ArrayList<CalendarDay> laughing_day= new ArrayList<>();
+    ArrayList<CalendarDay> neutral_day= new ArrayList<>();
+    ArrayList<CalendarDay> disapointment_day= new ArrayList<>();
+    ArrayList<CalendarDay> sad_day= new ArrayList<>();
+    ArrayList<CalendarDay> shocked_day= new ArrayList<>();
+    ArrayList<CalendarDay> angry_day= new ArrayList<>();
+    ArrayList<CalendarDay> crying_day= new ArrayList<>();
     public void GetMyPosts() {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -122,7 +134,24 @@ public class EmotionStaticsActivity extends AppCompatActivity {
             {
                 crying_day.add(new_day);
             }
+
         }
+        Fragment fragment = new GraphFragment(); // Fragment 생성
+        Bundle bundle = new Bundle(9); // 파라미터는 전달할 데이터 개수
+        bundle.putInt("happy_day",happy_day.size()); // key , value
+        bundle.putInt("smile_day",smile_day.size());
+        bundle.putInt("laughing_day",laughing_day.size());
+        bundle.putInt("neutral_day",neutral_day.size());
+        bundle.putInt("disapointment_day",disapointment_day.size());
+        bundle.putInt("sad_day",sad_day.size());
+        bundle.putInt("shocked_day",shocked_day.size());
+        bundle.putInt("angry_day",angry_day.size());
+        bundle.putInt("crying_day",crying_day.size());
+        //화면에 보여지는 fragment를 추가하거나 바꿀 수 있는 객체를 만든다.
+        fragment.setArguments(bundle);
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.add(R.id.graph_viewer,fragment);
+        transaction.commit();
         materialCalendarView.addDecorators(
                 new SundayDecorator(),
                 new SaturdayDecorator(),
@@ -137,6 +166,7 @@ public class EmotionStaticsActivity extends AppCompatActivity {
                 new EmotionDecorator(angry_day,Emotion.ANGRY,this),
                 new EmotionDecorator(crying_day,Emotion.CRYING,this)
         );
+
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -154,14 +184,12 @@ public class EmotionStaticsActivity extends AppCompatActivity {
         posts = new ArrayList<PostData>();
         GetMyPosts();
         materialCalendarView = findViewById(R.id.emotion_calendarview);
-        materialCalendarView.setTileHeightDp((int) (standardSize_Y / 10));
+        //materialCalendarView.setTileHeightDp((int) (standardSize_Y / 10));
         materialCalendarView.state().edit()
                 .setFirstDayOfWeek(Calendar.SUNDAY)
                 .setMinimumDate(CalendarDay.from(2017, 0, 1))
                 .setMaximumDate(CalendarDay.from(2030, 11, 31))
                 .commit();
-
-
 
         materialCalendarView.setOnDateChangedListener(new OnDateSelectedListener() {
             @Override
@@ -173,8 +201,5 @@ public class EmotionStaticsActivity extends AppCompatActivity {
             }
         });
     }
-
-
-
 
 }
