@@ -74,7 +74,6 @@ public class DiaryActivity3 extends AppCompatActivity {
 
         // 기록버튼
         next_btn = findViewById(R.id.next_btn);
-
         next_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
