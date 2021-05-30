@@ -13,9 +13,7 @@ import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 
-import com.example.mpteam.R;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -23,6 +21,7 @@ import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 public class MapActivity extends AppCompatActivity {
 
@@ -73,8 +72,8 @@ public class MapActivity extends AppCompatActivity {
     }
 
     public void init(){
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        SupportMapFragment mapFragment = (SupportMapFragment)fragmentManager.findFragmentById(R.id.map);
+        FragmentManager fragmentManager = this.getSupportFragmentManager();
+        SupportMapFragment mapFragment = (SupportMapFragment)fragmentManager.findFragmentById(R.id.GoogleMap);
 
 
         MapReadyCallback callback1 = new MapReadyCallback();
@@ -140,9 +139,10 @@ public class MapActivity extends AppCompatActivity {
                 return;
         }
 
+
         // 현재 위치 표시
         map.setMyLocationEnabled(true);
-
+        map.addMarker(new MarkerOptions().position(position).title("내 위치"));
     }
 
     // 현재 위치 측정이 성공하면 반응하는 리스너

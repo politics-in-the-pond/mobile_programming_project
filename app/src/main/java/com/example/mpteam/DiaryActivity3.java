@@ -157,7 +157,7 @@ public class DiaryActivity3 extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             Intent mapIntent = new Intent(DiaryActivity3.this, MapActivity.class);
-            startActivityForResult(mapIntent, 0);
+            startActivity(mapIntent);
         }
     }
 }
