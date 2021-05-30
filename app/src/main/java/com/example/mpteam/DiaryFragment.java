@@ -115,6 +115,12 @@ public class DiaryFragment extends Fragment {
         return viewGroup;
     }
 
+    @Override
+    public void onResume(){
+        super.onResume();
+        refresh();
+    }
+
     public void refresh(){
         db.collection("streak").document(user.getUid()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
@@ -124,13 +130,19 @@ public class DiaryFragment extends Fragment {
                 if(DateModule.compareDay(ds.getLastDay(),DateModule.getToday())>1){
                     Toast.makeText(getContext(),"임무 실패!",Toast.LENGTH_SHORT).show();
                 }
-                if(ds.getGauge()/7>0){
+                if(ds.getGauge()/7>2){
+                    coinImage.setImageResource(R.drawable.fuel_coin_yellow);
+                    coin.setText("  x" + Integer.toString(3));
+                    progressBar.setProgress(7);
+                } else if(ds.getGauge()/7>0) {
                     coinImage.setImageResource(R.drawable.fuel_coin_green);
-                } else{
+                    coin.setText("  x" + Integer.toString(ds.getGauge() / 7));
+                    progressBar.setProgress(ds.getGauge() % 7);
+                } else {
                     coinImage.setImageResource(R.drawable.gauge);
+                    coin.setText("  x" + Integer.toString(ds.getGauge() / 7));
+                    progressBar.setProgress(ds.getGauge() % 7);
                 }
-                coin.setText("  x"+Integer.toString(ds.getGauge()/7));
-                progressBar.setProgress(ds.getGauge()%7);
             }
         });
     }

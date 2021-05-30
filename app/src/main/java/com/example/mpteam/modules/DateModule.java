@@ -19,7 +19,9 @@ public class DateModule {
         try {
             origin = dateFormat.parse(dayOrigin);
             Date compare = dateFormat.parse(dayNew);
-            return compare.compareTo(origin);
+            long calDate = compare.getTime() - origin.getTime();
+            long calDateDays = calDate / ( 24*60*60*1000);
+            return (int) calDateDays;
         } catch (ParseException e) {
             e.printStackTrace();
         }

@@ -16,6 +16,7 @@ import androidx.databinding.DataBindingUtil;
 import com.example.mpteam.data.PostData;
 import com.example.mpteam.databinding.ActivityDiary3Binding;
 import com.example.mpteam.modules.DataDB;
+import com.example.mpteam.modules.DateModule;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -112,6 +113,9 @@ public class DiaryActivity3 extends AppCompatActivity {
 
                                     db.setPostData(post);
 
+                                    if(day.equals(DateModule.getToday())){
+                                        db.updateDiaryStreak(getApplicationContext());
+                                    }
                                     Intent intent = new Intent(DiaryActivity3.this, DiaryActivity4.class);
                                     startActivity(intent);
                                     finish();
