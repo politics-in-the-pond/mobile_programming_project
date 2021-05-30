@@ -68,6 +68,7 @@ public class MyPageFragment extends Fragment {
     Button btn_change_pw;
     Button btn_logout;
     Button btn_emotion_statics;
+    Button btn_useCoin;
     AlertDialog nickname_change_dialog;
     AlertDialog email_change_dialog;
     AlertDialog image_change_dialog;
@@ -317,6 +318,7 @@ public class MyPageFragment extends Fragment {
         btn_change_pw = viewGroup.findViewById(R.id.change_pw);
         btn_logout = viewGroup.findViewById(R.id.logout_btn);
         btn_emotion_statics=viewGroup.findViewById(R.id.btn_emotion_statics);
+        btn_useCoin=viewGroup.findViewById(R.id.useCoin);
         create_nickname_dialog();
         create_email_dialog();
         create_image_dialog();
@@ -381,6 +383,13 @@ public class MyPageFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 logout_dialog.show();
+            }
+        });
+        btn_useCoin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DataDB data = new DataDB();
+                data.useCoin(getContext());
             }
         });
         return viewGroup;
