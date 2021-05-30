@@ -8,7 +8,7 @@
     android:orientation="vertical"
     android:background="#002060"
     android:layout_height="match_parent"
-    tools:context=".DiaryActivity">
+    tools:context=".DiaryFragment2">
 
     <TextView
         android:id="@+id/day_text"

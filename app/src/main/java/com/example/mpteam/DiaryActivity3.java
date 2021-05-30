@@ -21,6 +21,11 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Transaction;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -31,6 +36,7 @@ import lombok.NonNull;
 
 public class DiaryActivity3 extends AppCompatActivity {
     private final int GET_GALLERY_IMAGE = 200;
+
     String day;
     Button next_btn;
     ImageView gallery;
@@ -110,13 +116,13 @@ public class DiaryActivity3 extends AppCompatActivity {
                                     post.setEmotion(1);
                                     post.setImageURL(new ArrayList<String>());
                                     post.addImageURL(imageUrl.toString());
-
                                     db.setPostData(post);
+                                    db.updateDiaryStreak();
 
                                     if(day.equals(DateModule.getToday())){
                                         db.updateDiaryStreak(getApplicationContext());
                                     }
-                                    Intent intent = new Intent(DiaryActivity3.this, DiaryActivity4.class);
+                                    Intent intent = new Intent(DiaryActivity3.this, MainActivity.class);
                                     startActivity(intent);
                                     finish();
                                 }
@@ -135,10 +141,9 @@ public class DiaryActivity3 extends AppCompatActivity {
                     post.setEmotion(1);
                     post.setImageURL(new ArrayList<String>());
                     post.addImageURL("");
-
                     db.setPostData(post);
                     db.updateDiaryStreak(getApplicationContext());
-                    Intent intent = new Intent(DiaryActivity3.this, DiaryActivity4.class);
+                    Intent intent = new Intent(DiaryActivity3.this, MainActivity.class);
                     startActivity(intent);
                     finish();
                 }
@@ -147,7 +152,6 @@ public class DiaryActivity3 extends AppCompatActivity {
 
         binding.map.setOnClickListener(new Map());
     }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

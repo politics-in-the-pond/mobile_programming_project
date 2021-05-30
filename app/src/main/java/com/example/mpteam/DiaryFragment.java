@@ -58,7 +58,8 @@ public class DiaryFragment extends Fragment {
                 Intent intent = new Intent(getActivity(), StartActivity.class);
                 intent.putExtra("name", name);
                 intent.putExtra("period", period);
-                startActivity(intent);
+                intent.putExtra("image",R.drawable.moon);
+                getActivity().startActivityForResult(intent,0);
             }
         });
         btn2 = viewGroup.findViewById(R.id.btn2);
@@ -70,7 +71,8 @@ public class DiaryFragment extends Fragment {
                 Intent intent = new Intent(getActivity(), StartActivity.class);
                 intent.putExtra("name", name);
                 intent.putExtra("period", period);
-                startActivity(intent);
+                intent.putExtra("image",R.drawable.mars);
+                getActivity().startActivityForResult(intent,0);
             }
         });
         btn3 = viewGroup.findViewById(R.id.btn3);
@@ -82,7 +84,8 @@ public class DiaryFragment extends Fragment {
                 Intent intent = new Intent(getActivity(), StartActivity.class);
                 intent.putExtra("name", name);
                 intent.putExtra("period", period);
-                startActivity(intent);
+                intent.putExtra("image",R.drawable.saturn);
+                getActivity().startActivityForResult(intent,0);
             }
         });
         btn4 = viewGroup.findViewById(R.id.btn4);
@@ -94,7 +97,8 @@ public class DiaryFragment extends Fragment {
                 Intent intent = new Intent(getActivity(), StartActivity.class);
                 intent.putExtra("name", name);
                 intent.putExtra("period", period);
-                startActivity(intent);
+                intent.putExtra("image",R.drawable.uranus);
+                getActivity().startActivityForResult(intent,0);
             }
         });
         btn_useCoin = (Button) viewGroup.findViewById(R.id.useCoin);
@@ -120,6 +124,7 @@ public class DiaryFragment extends Fragment {
         super.onResume();
         refresh();
     }
+
 
     public void refresh(){
         db.collection("streak").document(user.getUid()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
