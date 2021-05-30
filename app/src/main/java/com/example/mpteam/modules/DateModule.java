@@ -8,9 +8,12 @@ public class DateModule {
 
     static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
 
-    public static int compareDay(String dayOrigin, String dayNew) { //origin : 10일 new : 12일 일때, 2 반환
-        if(dayOrigin.equals("")){
+    public static int compareDay(String dayOrigin, String dayNew) { //origin : 10일 new : 12일 일때, 2 반환 //0반환되면 같은 날
+        if (dayOrigin.equals("")) {
             return 1;
+        }
+        if(dayNew.equals("")) {
+            return -1;
         }
         Date origin = null;
         try {
@@ -23,7 +26,7 @@ public class DateModule {
         return 0;
     }
 
-    public static String getToday(){
+    public static String getToday() {
         return dateFormat.format(System.currentTimeMillis());
     }
 }

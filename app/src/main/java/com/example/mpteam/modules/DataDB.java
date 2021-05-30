@@ -18,9 +18,9 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firestore.v1.Document;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 
 public class DataDB {
@@ -54,16 +54,16 @@ public class DataDB {
                 });
     }
 
-    public void updateDiaryStreak(){
+    public void updateDiaryStreak() {
         db.collection("streak").document(user.getUid()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 DocumentSnapshot document = task.getResult();
-                DiaryStreak ds = new DiaryStreak(user.getUid(),document.get("lastDay").toString(),Integer.parseInt(document.get("gauge").toString()));
-                if(DateModule.compareDay(document.get("lastDay").toString(),DateModule.getToday())>1){ //하루이상 안썼을 때
-                    Log.d("DataDB","Game Over"); //게임오버 추가
+                DiaryStreak ds = new DiaryStreak(user.getUid(), document.get("startDay").toString(), document.get("lastDay").toString(), Integer.parseInt(document.get("gauge").toString()));
+                if (DateModule.compareDay(document.get("lastDay").toString(), DateModule.getToday()) > 1) { //하루이상 안썼을 때
+                    Log.d("DataDB", "Game Over"); //게임오버 추가
                 }
-                ds.setGauge(ds.getGauge()+1);
+                ds.setGauge(ds.getGauge() + 1);
                 ds.setLastDay(DateModule.getToday());
 
                 db.collection("streak").document(user.getUid()).set(ds).addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -76,37 +76,41 @@ public class DataDB {
         });
     }
 
-    public void useCoin(Context context){
+    public void useCoin(Context context) {
         db.collection("streak").document(user.getUid()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 DocumentSnapshot document = task.getResult();
-                DiaryStreak ds = new DiaryStreak(document.get("userId").toString(),document.get("lastDay").toString(),Integer.parseInt(document.get("gauge").toString()));
-                if(DateModule.compareDay(ds.getLastDay(),DateModule.getToday())==0){
+                DiaryStreak ds = new DiaryStreak(document.get("userId").toString(), document.get("startDay").toString(),  document.get("lastDay").toString(), Integer.parseInt(document.get("gauge").toString()));
+                if (DateModule.compareDay(ds.getLastDay(), DateModule.getToday()) == 0) {
                     Toast.makeText(context, "이미 오늘 일기를 썼습니다.", Toast.LENGTH_SHORT).show();
-                    Log.d("DataDB","저런 오늘은 일기를 쓰셨네요!");
+                    Log.d("DataDB", "저런 오늘은 일기를 쓰셨네요!");
                     return;
                 }
-                if(Integer.parseInt(document.get("gauge").toString())>=7){
-                    ds.setGauge(ds.getGauge()-7);
+                if (Integer.parseInt(document.get("gauge").toString()) >= 7) {
+                    ds.setGauge(ds.getGauge() - 7);
                     ds.setLastDay(DateModule.getToday());
                     db.collection("streak").document(user.getUid()).set(ds).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void unused) {
                             Toast.makeText(context, "코인을 사용했습니다.", Toast.LENGTH_SHORT).show();
-                            Log.d("DataDB","코인사용완료");
+                            Log.d("DataDB", "코인사용완료");
                         }
                     });
-                } else{
+                } else {
                     Toast.makeText(context, "코인이 부족합니다", Toast.LENGTH_SHORT).show();
-                    Log.d("DataDB","저런 코인이 부족하네요! 코인 개수 : " + Integer.toString(ds.getGauge()/7) + " 남은 게이지 : " + Integer.toString(ds.getGauge()%7));
+                    Log.d("DataDB", "저런 코인이 부족하네요! 코인 개수 : " + Integer.toString(ds.getGauge() / 7) + " 남은 게이지 : " + Integer.toString(ds.getGauge() % 7));
                 }
             }
         });
     }
 
-    public void clearStreak(){
-        DiaryStreak ds = new DiaryStreak(user.getUid(),"",0);
+    public void updateStart() {
+        db.collection("streak").document(user.getUid()).update("startDay",DateModule.getToday());
+    }
+
+    public void clearStreak() {
+        DiaryStreak ds = new DiaryStreak(user.getUid(), "", "", 0);
         db.collection("streak").document(user.getUid()).set(ds);
     }
 

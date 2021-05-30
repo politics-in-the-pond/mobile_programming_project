@@ -6,23 +6,48 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.mpteam.data.DiaryStreak;
+import com.example.mpteam.modules.DataDB;
+import com.example.mpteam.modules.DateModule;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 public class DiaryFragment extends Fragment {
 
     ViewGroup viewGroup;
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     LinearLayout btn1, btn2, btn3, btn4;
+    Button btn_useCoin;
+    ImageView coinImage;
+    TextView coin;
+    ProgressBar progressBar;
 
     @SuppressLint("UseCompatLoadingForDrawables")
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         viewGroup = (ViewGroup) inflater.inflate(R.layout.fragment_diary, container, false);
+        refresh();
 
+        coinImage = viewGroup.findViewById(R.id.coinImage);
+        coin = viewGroup.findViewById(R.id.coinText);
+        progressBar = viewGroup.findViewById(R.id.progress);
 
         btn1 = viewGroup.findViewById(R.id.btn1);
         btn1.setOnClickListener(new View.OnClickListener() {
@@ -72,8 +97,42 @@ public class DiaryFragment extends Fragment {
                 startActivity(intent);
             }
         });
+        btn_useCoin = (Button) viewGroup.findViewById(R.id.useCoin);
+        btn_useCoin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DataDB data = new DataDB();
+                data.useCoin(getContext());
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                refresh();
+            }
+        });
 
         return viewGroup;
+    }
+
+    public void refresh(){
+        db.collection("streak").document(user.getUid()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                DocumentSnapshot document = task.getResult();
+                DiaryStreak ds = new DiaryStreak(user.getUid(),document.get("startDay").toString(), document.get("lastDay").toString(), Integer.parseInt(document.get("gauge").toString()));
+                if(DateModule.compareDay(ds.getLastDay(),DateModule.getToday())>1){
+                    Toast.makeText(getContext(),"임무 실패!",Toast.LENGTH_SHORT).show();
+                }
+                if(ds.getGauge()/7>0){
+                    coinImage.setImageResource(R.drawable.fuel_coin_green);
+                } else{
+                    coinImage.setImageResource(R.drawable.gauge);
+                }
+                coin.setText("  x"+Integer.toString(ds.getGauge()/7));
+                progressBar.setProgress(ds.getGauge()%7);
+            }
+        });
     }
 
 }

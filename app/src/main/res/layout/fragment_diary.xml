@@ -12,42 +12,51 @@
         android:padding="10dp">
 
         <ImageView
+            android:id="@+id/coinImage"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="25dp"
+            android:layout_marginLeft="35dp"
             android:src="@drawable/gauge" />
 
-        <ProgressBar
-            android:id="@+id/progress"
-            style="@android:style/Widget.ProgressBar.Horizontal"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:max="100"
-            android:progress="40" />
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginLeft="10dp">
-            <Button
-                android:layout_width="60dp"
-                android:layout_height="30dp"
-                android:layout_margin="1dp"
-                android:background="@drawable/custom_btn"
-                android:text="저장" />
+            android:layout_marginTop="20dp">
 
-            <Button
-                android:layout_width="60dp"
-                android:layout_height="30dp"
-                android:layout_margin="1dp"
-                android:background="@drawable/custom_btn"
-                android:text="사용" />
+            <ProgressBar
+                android:id="@+id/progress"
+                style="@android:style/Widget.ProgressBar.Horizontal"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:max="7"
+                android:progress="0" />
+
+            <TextView
+                android:id="@+id/coinText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor="@color/white"
+                android:text=" x0" />
+
         </LinearLayout>
+
+        <Button
+            android:id="@+id/useCoin"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_margin="1dp"
+            android:background="@drawable/custom_btn"
+            android:text="사용" />
+
+
     </LinearLayout>
 
     <ImageView

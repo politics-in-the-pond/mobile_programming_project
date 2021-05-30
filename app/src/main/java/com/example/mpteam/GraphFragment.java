@@ -1,12 +1,11 @@
 package com.example.mpteam;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.fragment.app.Fragment;
 
 import com.example.mpteam.GraphClass.CustomRenderer;
 import com.github.mikephil.charting.charts.BarChart;
@@ -31,7 +30,7 @@ public class GraphFragment extends Fragment {
                              Bundle savedInstanceState) {
         viewGroup = (ViewGroup) inflater.inflate(R.layout.fragment_graph, container, false);
         String title = "감정 통계";
-       ArrayList<BarEntry> entries = new ArrayList<>();
+        ArrayList<BarEntry> entries = new ArrayList<>();
         entries.add(new BarEntry(0f, getArguments().getInt("happy_day")));
         entries.add(new BarEntry(1f, getArguments().getInt("smile_day")));
         entries.add(new BarEntry(2f, getArguments().getInt("laughing_day")));
@@ -43,7 +42,7 @@ public class GraphFragment extends Fragment {
         entries.add(new BarEntry(8f, getArguments().getInt("crying_day")));
         BarChart barChart = (BarChart) viewGroup.findViewById(R.id.chart);
 
-        BarDataSet depenses = new BarDataSet (entries, title);
+        BarDataSet depenses = new BarDataSet(entries, title);
         depenses.setValueFormatter(new IntegerFormatter());
         depenses.setValueTextSize(20);
         //depenses.setAxisDependency(YAxis.AxisDependency.LEFT);
@@ -52,7 +51,7 @@ public class GraphFragment extends Fragment {
         datasetsarr.add(depenses);
         BarData data = new BarData(datasetsarr); // 라이브러리 v3.x 사용하면 에러 발생함
         depenses.setColors(ColorTemplate.COLORFUL_COLORS); //
-        barChart.animateXY(1000,1000);
+        barChart.animateXY(1000, 1000);
         barChart.setDrawGridBackground(false);
         barChart.setDrawBarShadow(false);
         barChart.getAxisLeft().setSpaceBottom(50f);
@@ -64,7 +63,7 @@ public class GraphFragment extends Fragment {
         barChart.getAxisLeft().setDrawLabels(false);
         barChart.getAxisRight().setDrawLabels(false);
         barChart.getXAxis().setEnabled(false);
-        barChart.setRenderer(new CustomRenderer(barChart,barChart.getAnimator(), barChart.getViewPortHandler(),getContext()));
+        barChart.setRenderer(new CustomRenderer(barChart, barChart.getAnimator(), barChart.getViewPortHandler(), getContext()));
         barChart.setDrawMarkers(true);
         // XAxis
         barChart.setDrawValueAboveBar(false);
@@ -74,7 +73,6 @@ public class GraphFragment extends Fragment {
         barChart.invalidate();
         return viewGroup;
     }
-
 
 
     public class IntegerFormatter implements IValueFormatter {

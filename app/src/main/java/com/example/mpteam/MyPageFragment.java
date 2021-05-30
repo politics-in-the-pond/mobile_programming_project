@@ -317,8 +317,8 @@ public class MyPageFragment extends Fragment {
         btn_change_email = viewGroup.findViewById(R.id.change_email);
         btn_change_pw = viewGroup.findViewById(R.id.change_pw);
         btn_logout = viewGroup.findViewById(R.id.logout_btn);
-        btn_emotion_statics=viewGroup.findViewById(R.id.btn_emotion_statics);
-        btn_useCoin=viewGroup.findViewById(R.id.useCoin);
+        btn_emotion_statics = viewGroup.findViewById(R.id.btn_emotion_statics);
+        btn_useCoin = viewGroup.findViewById(R.id.useCoin);
         create_nickname_dialog();
         create_email_dialog();
         create_image_dialog();
