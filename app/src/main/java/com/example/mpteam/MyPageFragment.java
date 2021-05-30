@@ -514,7 +514,7 @@ public class MyPageFragment extends Fragment {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 DocumentSnapshot document = task.getResult();
-                DiaryStreak ds = new DiaryStreak(user.getUid(), document.get("startDay").toString(), document.get("lastDay").toString(), Integer.parseInt(document.get("gauge").toString()));
+                DiaryStreak ds = new DiaryStreak(user.getUid(), document.get("startDay").toString(), document.get("lastDay").toString(), Integer.parseInt(document.get("gauge").toString()), Integer.parseInt(document.get("period").toString()));
                 if (DateModule.compareDay(ds.getLastDay(), DateModule.getToday()) > 1) {
                     Toast.makeText(getContext(), "임무 실패!", Toast.LENGTH_SHORT).show();
                 }

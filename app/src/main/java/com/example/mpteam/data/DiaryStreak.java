@@ -4,13 +4,22 @@ import java.io.Serializable;
 
 public class DiaryStreak implements Serializable {
     String userId, startDay, lastDay; //simple data format "YYYY/MM/DD"
-    int gauge; //gauge%7 = left gauge, (int) gauge/7 = coin
+    int gauge, period; //gauge%7 = left gauge, (int) gauge/7 = coin
 
-    public DiaryStreak(String userId, String startDay, String lastDay, int gauge) {
+    public DiaryStreak(String userId, String startDay, String lastDay, int gauge, int period) {
         this.userId = userId;
         this.startDay = startDay;
         this.lastDay = lastDay;
         this.gauge = gauge;
+        this.period = period;
+    }
+
+    public int getPeriod() {
+        return period;
+    }
+
+    public void setPeriod(int period) {
+        this.period = period;
     }
 
     public String getStartDay() {
