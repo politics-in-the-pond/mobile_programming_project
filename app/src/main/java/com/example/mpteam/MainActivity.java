@@ -56,7 +56,7 @@ public class MainActivity extends FragmentActivity {
         viewPager = findViewById(R.id.pager);
         pagerAdapter = new ScreenSlidePagerAdapter(this);
         viewPager.setAdapter(pagerAdapter);
-        viewPager.setCurrentItem(1);
+
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
@@ -87,7 +87,11 @@ public class MainActivity extends FragmentActivity {
             }
         });
     }
-
+    public void onResume()
+    {
+        super.onResume();
+        viewPager.setCurrentItem(1);
+    }
     public void onBackPressed() {
         finish();
     }
@@ -99,7 +103,7 @@ public class MainActivity extends FragmentActivity {
 
         @Override
         public Fragment createFragment(int position) {
-            bottomNavigationView.getMenu().getItem(position).setChecked(true);
+
             return fragment_list.get(position);
         }
 
