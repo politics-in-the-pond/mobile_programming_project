@@ -53,6 +53,7 @@ public class MainActivity extends FragmentActivity {
         fragment_list.add(myPageFragment);
         fragment_list.add(diaryFragment);
         fragment_list.add(boxFragment);
+
         viewPager = findViewById(R.id.pager);
         pagerAdapter = new ScreenSlidePagerAdapter(this);
         viewPager.setAdapter(pagerAdapter);

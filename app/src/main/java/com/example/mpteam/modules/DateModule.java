@@ -9,6 +9,9 @@ public class DateModule {
     static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
 
     public static int compareDay(String dayOrigin, String dayNew) { //origin : 10일 new : 12일 일때, 2 반환
+        if(dayOrigin.equals("")){
+            return 1;
+        }
         Date origin = null;
         try {
             origin = dateFormat.parse(dayOrigin);

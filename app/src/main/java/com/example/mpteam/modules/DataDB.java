@@ -1,6 +1,8 @@
 package com.example.mpteam.modules;
 
+import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -19,6 +21,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firestore.v1.Document;
 
 import java.util.Date;
+import java.util.Map;
 
 public class DataDB {
 
@@ -71,6 +74,34 @@ public class DataDB {
                 });
             }
         });
+    }
+
+    public void useCoin(Context context){
+        db.collection("streak").document(user.getUid()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                DocumentSnapshot document = task.getResult();
+                DiaryStreak ds = document.toObject(DiaryStreak.class);
+                if(ds.getGauge()>=7){
+                    ds.setGauge(ds.getGauge()-7);
+                    ds.setLastDay(DateModule.getToday());
+                    db.collection("streak").add(ds).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+                        @Override
+                        public void onComplete(@NonNull Task<DocumentReference> task) {
+                            Log.d("DataDB","코인사용완료");
+                        }
+                    });
+                } else{
+                    Toast.makeText(context, "코인이 부족합니다", Toast.LENGTH_SHORT).show();
+                    Log.d("DataDB","저런 코인이 부족하네요!");
+                }
+            }
+        });
+    }
+
+    public void clearStreak(){
+        DiaryStreak ds = new DiaryStreak(user.getUid(),"",0);
+        db.collection("streak").add(ds);
     }
 
 /*    테스트용 코드
