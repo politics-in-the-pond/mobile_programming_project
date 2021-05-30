@@ -31,6 +31,7 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Transaction;
 
 import java.util.ArrayList;
+import java.lang.ClassCastException;
 
 public class MainActivity extends FragmentActivity {
     public enum MainState {
@@ -68,7 +69,12 @@ public class MainActivity extends FragmentActivity {
         pref.edit().putString("userToken", token);
         Log.d("MainToken", "This is token: " + token);
 
-        fragment_list = new ArrayList<>();
+        Intent intent = getIntent();
+        if (getIntent() != null) {
+            state = MainState.values()[intent.getIntExtra("state", 0)];
+        }
+        Log.v("state",Integer.toString(intent.getIntExtra("state",0)));
+        setFragmentlist();
         viewPager = findViewById(R.id.pager);
         pagerAdapter = new ScreenSlidePagerAdapter(this);
 
@@ -102,16 +108,65 @@ public class MainActivity extends FragmentActivity {
             }
         });
     }
-    public void onResume()
+public void setFragmentlist()
+{
+    fragment_list = new ArrayList<>();
+    if(state==MainState.START) {
+        fragment_list.add(myPageFragment);
+        fragment_list.add(diaryFragment);
+        fragment_list.add(boxFragment);
+    }
+    else if(state==MainState.DURING_BEFORE)
     {
-        super.onResume();
-        ApplyState();
+        fragment_list.add(myPageFragment);
+        fragment_list.add(diaryFragment2);
+        fragment_list.add(boxFragment);
 
-
+    }
+    else if(state==MainState.DURING_AFTER)
+    {
+        fragment_list.add(myPageFragment);
+        fragment_list.add(myPageFragment);
+        fragment_list.add(boxFragment);
+    }
+    else if(state==MainState.SUCCESS)
+    {
+        fragment_list.add(myPageFragment);
+        fragment_list.add(diaryFragment2);
+        fragment_list.add(boxFragment);
+    }
+    else
+    {
+        fragment_list.add(myPageFragment);
+        fragment_list.add(diaryFragment);
+        fragment_list.add(boxFragment);
+    }
+}
+    public void onStart()
+    {
+        super.onStart();
+        viewPager.setAdapter(pagerAdapter);
+        viewPager.setCurrentItem(1);
     }
     public void onBackPressed() {
         finish();
     }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1) {
+             if (resultCode == RESULT_OK) {
+                state=MainState.values()[data.getIntExtra("state",0)];
+                setFragmentlist();
+                viewPager.setCurrentItem(1);
+                Log.v("state222",Integer.toString(data.getIntExtra("state",0)));
+                 UpdateDataInteger("streak", "period", data.getIntExtra("period",-1));
+                 UpdateData("streak", "startDay", DateModule.getToday());
+             }
+           } else if (requestCode == 2) {
+
+         }
+        }
 
     private class ScreenSlidePagerAdapter extends FragmentStateAdapter {
         public ScreenSlidePagerAdapter(FragmentActivity fa) {
@@ -128,87 +183,60 @@ public class MainActivity extends FragmentActivity {
             return NUM_PAGES;
         }
     }
-    private void SetFragment(MainState st)
-    {
-        fragment_list = new ArrayList<>();
-        if(st==MainState.START) {
-            fragment_list.add(myPageFragment);
-            fragment_list.add(diaryFragment);
-            fragment_list.add(boxFragment);
+    private void UpdateDataInteger(String collection, String field, int content) {
+        db = FirebaseFirestore.getInstance();
+        String uid = user != null ? user.getUid() : null;
+        final DocumentReference sfDocRef = db.collection(collection).document(uid);
 
-        }
-        else if(st==MainState.DURING_BEFORE)
-        {
-            fragment_list.add(myPageFragment);
-            fragment_list.add(diaryFragment2);
-            fragment_list.add(boxFragment);
-
-        }
-        else if(st==MainState.DURING_AFTER)
-        {
-            fragment_list.add(myPageFragment);
-            fragment_list.add(myPageFragment);
-            fragment_list.add(boxFragment);
-        }
-        else if(st==MainState.SUCCESS)
-        {
-            fragment_list.add(myPageFragment);
-            fragment_list.add(diaryFragment2);
-            fragment_list.add(boxFragment);
-        }
-        else
-        {
-            fragment_list.add(myPageFragment);
-            fragment_list.add(diaryFragment);
-            fragment_list.add(boxFragment);
-        }
-        viewPager.setAdapter(pagerAdapter);
-        viewPager.setCurrentItem(1);
-    }
-
-    private void ApplyState()
-    {
-        String today = DateModule.getToday();
-        db.collection("streak").document(user.getUid()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+        db.runTransaction(new Transaction.Function<Void>() {
             @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                DocumentSnapshot document = task.getResult();
-                String lastDay = document.get("lastDay").toString();
-                String startDay = document.get("startDay").toString();
-                int period = Integer.parseInt(document.get("period").toString());
-                if(period==-1)
-                {
-                    SetFragment(MainState.START) ;
-
-                }
-                else if(period==0)
-                {
-                    SetFragment(MainState.SUCCESS) ;
-
-                }
-                else
-                {
-                    if(DateModule.compareDay(today,lastDay)==0){ //오늘 썼을 때
-                        SetFragment(MainState.DURING_AFTER) ;
-                    }
-                    else
-                    {
-                        SetFragment(MainState.DURING_BEFORE) ;
-                    }
-                }
+            public Void apply(Transaction transaction) throws FirebaseFirestoreException {
+                DocumentSnapshot snapshot = transaction.get(sfDocRef);
+                transaction.update(sfDocRef, field, content);
+                // Success
+                return null;
             }
-        });
-    }
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 0) {
-              if (resultCode == RESULT_OK) {
-                    ApplyState();
-             }
-           } else if (requestCode == 1) {
+        }).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Log.d("scmsg", "Transaction success!");
+            }
+        })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w("fmsg", "Transaction failure.", e);
+                    }
 
-         }
-        }
+                });
+    }
+
+    private void UpdateData(String collection, String field, String content) {
+        db = FirebaseFirestore.getInstance();
+        String uid = user != null ? user.getUid() : null;
+        final DocumentReference sfDocRef = db.collection(collection).document(uid);
+
+        db.runTransaction(new Transaction.Function<Void>() {
+            @Override
+            public Void apply(Transaction transaction) throws FirebaseFirestoreException {
+                DocumentSnapshot snapshot = transaction.get(sfDocRef);
+                transaction.update(sfDocRef, field, content);
+                // Success
+                return null;
+            }
+        }).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Log.d("scmsg", "Transaction success!");
+            }
+        })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w("fmsg", "Transaction failure.", e);
+                    }
+
+                });
+    }
 
 }

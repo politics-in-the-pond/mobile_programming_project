@@ -30,7 +30,6 @@
         <activity android:name=".DiaryActivity4" />
         <activity android:name=".DiaryActivity3" />
         <activity android:name=".DiaryActivity2" />
-        <activity android:name=".DiaryFragment2" />
         <activity android:name=".StartActivity" />
         <activity android:name=".MapActivity" />
 

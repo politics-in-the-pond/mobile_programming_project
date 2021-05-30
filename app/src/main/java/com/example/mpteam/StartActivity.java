@@ -56,70 +56,13 @@ public class StartActivity extends AppCompatActivity {
         next_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UpdateData("streak","startDay", DateModule.getToday());
-                UpdateDataInteger("streak","period", Integer.parseInt(period));
+                Intent intent = new Intent();
+                intent.putExtra("state",3);
+                intent.putExtra("period",Integer.parseInt(period));
+                setResult(RESULT_OK,intent);
+                finish();
             }
         });
     }
-    private void UpdateDataInteger(String collection, String field, int content) {
-        db = FirebaseFirestore.getInstance();
-        String uid = user != null ? user.getUid() : null;
-        final DocumentReference sfDocRef = db.collection(collection).document(uid);
 
-        db.runTransaction(new Transaction.Function<Void>() {
-            @Override
-            public Void apply(Transaction transaction) throws FirebaseFirestoreException {
-                DocumentSnapshot snapshot = transaction.get(sfDocRef);
-                transaction.update(sfDocRef, field, content);
-                // Success
-                return null;
-            }
-        }).addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void aVoid) {
-                setResult(RESULT_OK);
-                finish();
-                Log.d("scmsg", "Transaction success!");
-            }
-        })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        setResult(RESULT_CANCELED);
-                        finish();
-                        Log.w("fmsg", "Transaction failure.", e);
-                    }
-
-                });
-    }
-
-    private void UpdateData(String collection, String field, String content) {
-        db = FirebaseFirestore.getInstance();
-        String uid = user != null ? user.getUid() : null;
-        final DocumentReference sfDocRef = db.collection(collection).document(uid);
-
-        db.runTransaction(new Transaction.Function<Void>() {
-            @Override
-            public Void apply(Transaction transaction) throws FirebaseFirestoreException {
-                DocumentSnapshot snapshot = transaction.get(sfDocRef);
-                transaction.update(sfDocRef, field, content);
-                // Success
-                return null;
-            }
-        }).addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void aVoid) {
-                setResult(RESULT_OK);
-                finish();
-                Log.d("scmsg", "Transaction success!");
-            }
-        })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w("fmsg", "Transaction failure.", e);
-                    }
-
-                });
-    }
 }
