@@ -140,6 +140,7 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
                             firebaseUser = firebaseAuth.getCurrentUser();
                             DataDB db = new DataDB();
                             db.setUserData(new UserData(firebaseUser.getUid(), editTextSignUpNickname.getText().toString(), "", userPosts, userCards));
+                            db.clearStreak();
                             finish();
                             startActivity(new Intent(getApplicationContext(), MainActivity.class));
                         } else {

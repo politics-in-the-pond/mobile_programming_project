@@ -1,7 +1,7 @@
 package com.example.mpteam.CalendarClass;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
+
 import com.example.mpteam.R;
 import com.example.mpteam.data.Emotion;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
@@ -15,10 +15,11 @@ public class EmotionDecorator implements DayViewDecorator {
     private ArrayList<CalendarDay> dates;
     private Emotion emotion;
     private Context context;
-    public EmotionDecorator(ArrayList<CalendarDay> dates, Emotion emotion,Context context) {
-        this.dates=dates;
-        this.emotion=emotion;
-        this.context=context;
+
+    public EmotionDecorator(ArrayList<CalendarDay> dates, Emotion emotion, Context context) {
+        this.dates = dates;
+        this.emotion = emotion;
+        this.context = context;
     }
 
     @Override
@@ -32,40 +33,31 @@ public class EmotionDecorator implements DayViewDecorator {
     }
 
     public int emotion_to_image() {
-        if(emotion==Emotion.HAPPY)
-        {
+        if (emotion == Emotion.HAPPY) {
             return R.drawable.happy;
         }
-        if(emotion==Emotion.SMILE)
-        {
+        if (emotion == Emotion.SMILE) {
             return R.drawable.smile;
         }
-        if(emotion==Emotion.LAUGING)
-        {
+        if (emotion == Emotion.LAUGING) {
             return R.drawable.laughing;
         }
-        if(emotion==Emotion.NEUTRAL)
-        {
+        if (emotion == Emotion.NEUTRAL) {
             return R.drawable.neutral;
         }
-        if(emotion==Emotion.DISSAPOINTMENT)
-        {
+        if (emotion == Emotion.DISSAPOINTMENT) {
             return R.drawable.disappointment;
         }
-        if(emotion==Emotion.SAD)
-        {
+        if (emotion == Emotion.SAD) {
             return R.drawable.sad;
         }
-        if(emotion==Emotion.SHOCKED)
-        {
+        if (emotion == Emotion.SHOCKED) {
             return R.drawable.shocked;
         }
-        if(emotion==Emotion.ANGRY)
-        {
+        if (emotion == Emotion.ANGRY) {
             return R.drawable.angry;
         }
-        if(emotion==Emotion.CRYING)
-        {
+        if (emotion == Emotion.CRYING) {
             return R.drawable.crying;
         }
         return 0;

@@ -12,6 +12,7 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.example.mpteam.modules.DataDB;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -53,6 +54,7 @@ public class MainActivity extends FragmentActivity {
         fragment_list.add(myPageFragment);
         fragment_list.add(diaryFragment);
         fragment_list.add(boxFragment);
+
         viewPager = findViewById(R.id.pager);
         pagerAdapter = new ScreenSlidePagerAdapter(this);
         viewPager.setAdapter(pagerAdapter);
@@ -87,11 +89,12 @@ public class MainActivity extends FragmentActivity {
             }
         });
     }
-    public void onResume()
-    {
+
+    public void onResume() {
         super.onResume();
         viewPager.setCurrentItem(1);
     }
+
     public void onBackPressed() {
         finish();
     }
