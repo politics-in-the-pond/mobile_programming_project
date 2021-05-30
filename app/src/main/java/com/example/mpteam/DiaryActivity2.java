@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Point;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Display;
 
 import androidx.annotation.NonNull;
@@ -73,4 +74,5 @@ public class DiaryActivity2 extends AppCompatActivity {
         standardSize_X = (int) (ScreenSize.x / density);
         standardSize_Y = (int) (ScreenSize.y / density);
     }
+
 }
