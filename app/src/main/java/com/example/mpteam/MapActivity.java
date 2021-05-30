@@ -26,6 +26,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -91,11 +92,16 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 MarkerOptions marker = new MarkerOptions().position(latLng);
                 marker.title(title).draggable(true);
                 map.addMarker(marker);
+
+                moveCameraPos(marker.getPosition());
             }
         });
     }
 
-
+    public void moveCameraPos(LatLng latLng){
+        CameraUpdate updatePos = CameraUpdateFactory.newLatLng(latLng);
+        map.animateCamera(updatePos);
+    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
