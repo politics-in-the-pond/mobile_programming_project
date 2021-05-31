@@ -16,10 +16,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import com.example.mpteam.modules.AutoLoginProvider;
+import com.example.mpteam.modules.DateModule;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.regex.Pattern;
 
@@ -36,6 +39,7 @@ public class LoginActivityResume extends AppCompatActivity implements View.OnCli
     AutoLoginProvider autoLoginProvider;
     ProgressDialog progressDialog;
     //define firebase object
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
     FirebaseAuth firebaseAuth;
     private TextView tvLogin;
     private TextView tvToYourAccount;
@@ -151,4 +155,5 @@ public class LoginActivityResume extends AppCompatActivity implements View.OnCli
             startActivity(new Intent(this, FindActivity.class));
         }
     }
+
 }

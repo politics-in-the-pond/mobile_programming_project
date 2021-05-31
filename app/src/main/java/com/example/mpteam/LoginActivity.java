@@ -3,7 +3,9 @@ package com.example.mpteam;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -16,10 +18,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import com.example.mpteam.modules.AutoLoginProvider;
+import com.example.mpteam.modules.DateModule;
+import com.example.mpteam.modules.UnCatchTaskService;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreSettings;
 
 import java.util.regex.Pattern;
 
@@ -36,10 +44,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     AutoLoginProvider autoLoginProvider;
     ProgressDialog progressDialog;
     //define firebase object
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
     FirebaseAuth firebaseAuth;
     private TextView tvLogin;
     private TextView tvToYourAccount;
-
+    Intent intent;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -123,8 +132,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             } else {
                                 autoLoginProvider.AutoLoginRemover(getApplicationContext());
                             }
-                            finish();
-                            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                            ApplyState();
                         } else {
                             Toast.makeText(getApplicationContext(), "Login Failed! Please try again", Toast.LENGTH_LONG).show();
                             textviewMessage.setText("Passwords must consist of numbers, alphabets, \nand special symbols.\nPassword must be \nat least 8 characters long\n");
@@ -151,5 +159,55 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         if (view == textviewFindPassword) {
             startActivity(new Intent(this, FindActivity.class));
         }
+    }
+
+    private void ApplyState()
+    {
+        String today = DateModule.getToday();
+
+        FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder()
+                .setPersistenceEnabled(true)
+                .build();
+        db.setFirestoreSettings(settings);
+        DocumentReference docRef = db.collection("streak").document(firebaseAuth.getUid());
+        intent = new Intent(getApplicationContext(), MainActivity.class);
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        String lastDay = document.get("lastDay").toString();
+                        String startDay = document.get("startDay").toString();
+                        int period = Integer.parseInt(document.get("period").toString());
+                        if(period==-1)
+                        {
+                            set_state(0);
+                        }
+                        else if(period==0)
+                        {
+                            set_state(1);
+                        }
+                        else
+                        {
+                            if(DateModule.compareDay(today,lastDay)==0){ //오늘 썼을 때
+                                set_state(2);
+                            }
+                            else
+                            {
+                                set_state(3);
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    }
+    public void set_state(int num)
+    {
+        Log.v("state3s",Integer.toString(num));
+        intent.putExtra("state",num);
+        finish();
+        startActivity(intent);
     }
 }

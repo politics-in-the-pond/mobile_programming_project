@@ -340,7 +340,7 @@ public class MyPageFragment extends Fragment {
         create_pw_check_dialog();
         create_pw_change_dialog();
         create_logout_dialog();
-
+        Log.v("stateatetet",Integer.toString(getArguments().getInt("state")));
         refresh();
         if (user != null) {
             // Name, email address, and profile photo Url
@@ -393,7 +393,8 @@ public class MyPageFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), EmotionStaticsActivity.class);
-                startActivity(intent);
+                intent.putExtra("state",getArguments().getInt("state"));
+                startActivityForResult(intent,1);
             }
         });
         btn_logout.setOnClickListener(new View.OnClickListener() {

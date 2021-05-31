@@ -59,7 +59,7 @@ public class DiaryFragment extends Fragment {
                 intent.putExtra("name", name);
                 intent.putExtra("period", period);
                 intent.putExtra("image",R.drawable.moon);
-                getActivity().startActivityForResult(intent,0);
+                getActivity().startActivityForResult(intent,1);
             }
         });
         btn2 = viewGroup.findViewById(R.id.btn2);
@@ -72,7 +72,7 @@ public class DiaryFragment extends Fragment {
                 intent.putExtra("name", name);
                 intent.putExtra("period", period);
                 intent.putExtra("image",R.drawable.mars);
-                getActivity().startActivityForResult(intent,0);
+                getActivity().startActivityForResult(intent,1);
             }
         });
         btn3 = viewGroup.findViewById(R.id.btn3);
@@ -85,7 +85,7 @@ public class DiaryFragment extends Fragment {
                 intent.putExtra("name", name);
                 intent.putExtra("period", period);
                 intent.putExtra("image",R.drawable.saturn);
-                getActivity().startActivityForResult(intent,0);
+                getActivity().startActivityForResult(intent,1);
             }
         });
         btn4 = viewGroup.findViewById(R.id.btn4);
@@ -98,7 +98,7 @@ public class DiaryFragment extends Fragment {
                 intent.putExtra("name", name);
                 intent.putExtra("period", period);
                 intent.putExtra("image",R.drawable.uranus);
-                getActivity().startActivityForResult(intent,0);
+                getActivity().startActivityForResult(intent,1);
             }
         });
         btn_useCoin = (Button) viewGroup.findViewById(R.id.useCoin);

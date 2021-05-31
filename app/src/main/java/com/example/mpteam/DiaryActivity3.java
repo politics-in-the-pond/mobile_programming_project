@@ -113,7 +113,7 @@ public class DiaryActivity3 extends AppCompatActivity {
                                     post.setIspublic(false);
                                     post.setLatitude(3.14);
                                     post.setLongitude(3.14);
-                                    post.setEmotion(1);
+                                    post.setEmotion(intent.getIntExtra("select",0));
                                     post.setImageURL(new ArrayList<String>());
                                     post.addImageURL(imageUrl.toString());
                                     db.setPostData(post);
@@ -122,7 +122,8 @@ public class DiaryActivity3 extends AppCompatActivity {
                                         db.updateDiaryStreak(getApplicationContext());
                                     }
                                     Intent intent = new Intent(DiaryActivity3.this, MainActivity.class);
-                                    startActivity(intent);
+                                    intent.putExtra("state",2);
+                                    setResult(RESULT_CANCELED,intent);
                                     finish();
                                 }
                             });
@@ -137,13 +138,14 @@ public class DiaryActivity3 extends AppCompatActivity {
                     post.setIspublic(false);
                     post.setLatitude(3.14);
                     post.setLongitude(3.14);
-                    post.setEmotion(1);
+                    post.setEmotion(intent.getIntExtra("select",0));
                     post.setImageURL(new ArrayList<String>());
                     post.addImageURL("");
                     db.setPostData(post);
                     db.updateDiaryStreak(getApplicationContext());
                     Intent intent = new Intent(DiaryActivity3.this, MainActivity.class);
-                    startActivity(intent);
+                    intent.putExtra("state",2);
+                    setResult(RESULT_CANCELED,intent);
                     finish();
                 }
             }
