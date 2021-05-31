@@ -11,6 +11,9 @@ import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -27,22 +30,31 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.squareup.okhttp.Call;
+import com.squareup.okhttp.Callback;
+import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.Response;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class MapActivity extends AppCompatActivity implements OnMapReadyCallback,
         GoogleMap.OnMarkerClickListener {
 
-    ArrayList<Double> lng_list;
-    ArrayList<Double> lat_list;
-    ArrayList<String> name_list;
-    ArrayList<Bitmap> images_list;
-    ArrayList<Marker> marker_list;
+    ArrayList<Double> lng_list = new ArrayList<>();
+    ArrayList<Double> lat_list = new ArrayList<>();
+    ArrayList<String> name_list = new ArrayList<>();
+    ArrayList<Bitmap> images_list = new ArrayList<>();
+    ArrayList<Marker> marker_list = new ArrayList<>();
 
     // DiaryActvity3에서 받아오는 것
     Intent intent;
     String title;
-
+    String key = "AIzaSyAxePUJ-PC6sYwabb21YOiQE_VhMi1RIHM";
     String[] permission_list = {
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.ACCESS_FINE_LOCATION,
@@ -50,7 +62,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     };
     LocationManager locationManager;
     GoogleMap map;
-    MapView mapView;
+    EditText search_text;
+    ImageButton search_button;
 
     @Override
     public boolean onMarkerClick(@NonNull  Marker marker) {
@@ -71,12 +84,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         } else {
             init();
 
-            marker_list = new ArrayList<>();
-            lng_list = new ArrayList<>();
-            lat_list = new ArrayList<>();
-            name_list = new ArrayList<>();
-            images_list = new ArrayList<>();
-
         }
     }
 
@@ -85,16 +92,15 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         map = googleMap;
         getMyLocation();
 
-        map.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
-            @Override
-            public void onMapLongClick(@NonNull LatLng latLng) {
-                MarkerOptions marker = new MarkerOptions().position(latLng);
-                marker.title(title).draggable(true);
-                marker.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_CYAN));
-                map.addMarker(marker);
 
-                moveCameraPos(marker.getPosition());
-            }
+
+        map.setOnMapLongClickListener(latLng -> {
+            MarkerOptions marker = new MarkerOptions().position(latLng);
+            marker.title(title).draggable(true);
+            marker.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_CYAN));
+            map.addMarker(marker);
+
+            moveCameraPos(marker.getPosition());
         });
 
         map.setOnMarkerClickListener(this::onMarkerClick);
@@ -123,8 +129,19 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) fragmentManager.findFragmentById(R.id.GoogleMap);
         intent = getIntent();
 
+        search_text = (EditText) findViewById(R.id.floating_state_value);
+        search_button = (ImageButton)findViewById(R.id.floating_search_button);
+
         title = intent.getStringExtra("title");
 
+        search_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!search_text.getText().toString().trim().equals("")){
+                    new NetworkThread().start();
+                }
+            }
+        });
 
         mapFragment.getMapAsync(this::onMapReady);
     }
@@ -226,5 +243,141 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         }
     }
 
+
+    // 구글 서버에서 주변 정보를 받아오기 위한 쓰레드
+    class NetworkThread extends Thread {
+
+
+        @Override
+        public void run() {
+            super.run();
+
+            OkHttpClient client = new OkHttpClient();
+            Request.Builder builder = new Request.Builder();
+
+            String site = "https://maps.googleapis.com/maps/api/place/findplacefromtext/json" +
+                    "?input=" + search_text.getText().toString().trim() +
+                    "&inputtype=textquery" +
+                    "&fields=photos,formatted_address,name,rating,opening_hours,geometry" +
+                    "&key=AIzaSyAxePUJ-PC6sYwabb21YOiQE_VhMi1RIHM";
+
+
+//                    + "key=AIzaSyAxePUJ-PC6sYwabb21YOiQE_VhMi1RIHM"
+//                    + "&language=ko"
+//                    + "&input=광화문"
+//                    + "&inputtype=textquery";
+            Log.d("test123", "run: " + site);
+
+            builder = builder.url(site);
+            Request request = builder.build();
+
+            Callback1 callback1 = new Callback1();
+            Call call = client.newCall(request) ;
+            call.enqueue(callback1);
+        }
+    }
+
+
+
+
+    public void clearLists()
+    {
+        lat_list.clear();
+        lng_list.clear();
+        name_list.clear();
+    }
+
+    class Callback1 implements Callback {
+        @Override
+        public void onFailure(Request request, IOException e) {
+
+        }
+
+        @Override
+        public void onResponse(Response response) throws IOException {
+            try {
+
+                String result = response.body().string();
+                JSONObject obj = new JSONObject(result);
+
+                Log.d("test123", result);
+                String status = obj.getString("status");
+
+                if(status.equals("OK")){
+                    JSONArray results = obj.getJSONArray( "candidates");
+                    clearLists();
+
+
+                    JSONObject obj2 = results.getJSONObject(0);
+
+                    JSONObject location = obj2.getJSONObject("geometry").getJSONObject("location");
+                    double lat2 = location.getDouble("lat");
+                    double lng2 = location.getDouble("lng");
+
+                    String name = obj2.getString("name");
+
+                    lat_list.add(lat2);
+                    lng_list.add(lng2);
+                    name_list.add(name);
+
+                    runOnUiThread(() -> {
+                        LatLng position = new LatLng(lat2, lng2);
+                        MarkerOptions option = new MarkerOptions();
+                        option.position(position).title(name);
+
+                        Marker marker= map.addMarker(option);
+                        marker_list.add(marker);
+                        moveCameraPos(position);
+                    });
+
+//                    for(int i = 0; i < lat_list.size(); ++i){
+//                        double a1 = lat_list.get(i);
+//                        double a2 = lng_list.get(i);
+//                        String a3 = name_list.get(i);
+//
+//                        Log.d("test123", a1 + ", " + a2 + ", " + a3 + "," + a4);
+//                    }
+
+
+//                    runOnUiThread(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            // 지도에 표시되어 있는 마커를 제거한다.
+//                            for(Marker marker: marker_list){
+//                                marker.remove();
+//                            }
+//                            marker_list.clear();
+//
+//
+//                            for(int i = 0; i < lat_list.size(); ++i){
+//                                double lat3 = lat_list.get(i);
+//                                double lng3 = lng_list.get(i);
+//                                String name3 = name_list.get(i);
+//                                String vicinity3 = vincinity_list.get(i);
+//
+//                                LatLng position = new LatLng(lat3, lng3);
+//
+//                                MarkerOptions option = new MarkerOptions();
+//                                option.position(position);
+//
+//                                option.title(name3);
+//                                option.snippet(vicinity3);
+//
+//                                BitmapDescriptor bitmap = BitmapDescriptorFactory.fromResource(android.R.drawable.ic_menu_mylocation);
+//                                option.icon(bitmap);
+//
+//                                Marker marker = map.addMarker(option);
+//                                marker_list.add(marker);
+//                            }
+//                        }
+//                    });
+
+                }
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+
+        }
 
 }
