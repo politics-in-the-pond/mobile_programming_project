@@ -113,17 +113,17 @@ public class DiaryActivity3 extends AppCompatActivity {
                                     post.setIspublic(false);
                                     post.setLatitude(3.14);
                                     post.setLongitude(3.14);
-                                    post.setEmotion(intent.getIntExtra("select",0));
+                                    post.setEmotion(1);
                                     post.setImageURL(new ArrayList<String>());
                                     post.addImageURL(imageUrl.toString());
                                     db.setPostData(post);
-                                    db.updateDiaryStreak(v.getContext());
+                                    db.updateDiaryStreak(getApplicationContext());
+
                                     if(day.equals(DateModule.getToday())){
                                         db.updateDiaryStreak(getApplicationContext());
                                     }
                                     Intent intent = new Intent(DiaryActivity3.this, MainActivity.class);
-                                    intent.putExtra("state",2);
-                                    setResult(RESULT_CANCELED,intent);
+                                    startActivity(intent);
                                     finish();
                                 }
                             });
@@ -138,14 +138,13 @@ public class DiaryActivity3 extends AppCompatActivity {
                     post.setIspublic(false);
                     post.setLatitude(3.14);
                     post.setLongitude(3.14);
-                    post.setEmotion(intent.getIntExtra("select",0));
+                    post.setEmotion(1);
                     post.setImageURL(new ArrayList<String>());
                     post.addImageURL("");
                     db.setPostData(post);
                     db.updateDiaryStreak(getApplicationContext());
                     Intent intent = new Intent(DiaryActivity3.this, MainActivity.class);
-                    intent.putExtra("state",2);
-                    setResult(RESULT_CANCELED,intent);
+                    startActivity(intent);
                     finish();
                 }
             }
