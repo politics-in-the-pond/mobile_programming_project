@@ -17,6 +17,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Date;
@@ -42,6 +43,10 @@ public class DataDB {
 
                     }
                 });
+    }
+
+    public void uploadUserCard(int index){
+        db.collection("users").document(user.getUid()).update("cardIndex", FieldValue.arrayUnion(index));
     }
 
     public void setPostData(PostData post) {

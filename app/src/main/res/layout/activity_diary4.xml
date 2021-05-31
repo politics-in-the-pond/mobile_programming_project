@@ -69,7 +69,7 @@
         android:layout_height="300dp"
         android:layout_gravity="center"
         android:id="@+id/ex_card"
-        android:src="@drawable/excard3_only_first"/>
+        android:src="@drawable/first"/>
 
 
     <TextView

@@ -17,6 +17,7 @@ import com.example.mpteam.data.PostData;
 import com.example.mpteam.databinding.ActivityDiary3Binding;
 import com.example.mpteam.modules.DataDB;
 import com.example.mpteam.modules.DateModule;
+import com.example.mpteam.modules.RandomNumberGenerator;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -40,6 +41,7 @@ public class DiaryActivity3 extends AppCompatActivity {
     String day;
     Button next_btn;
     ImageView gallery;
+    RandomNumberGenerator rng;
     ActivityDiary3Binding binding;
     SharedPreferences pref;
     Uri file = null;
@@ -55,6 +57,7 @@ public class DiaryActivity3 extends AppCompatActivity {
         // 데이터 바인딩 시험
         binding = DataBindingUtil.setContentView(this, R.layout.activity_diary3);
         pref = getSharedPreferences("pref", DiaryActivity3.MODE_PRIVATE);
+        rng = new RandomNumberGenerator();
 
         Intent intent = getIntent();
         day = intent.getStringExtra("day");
@@ -117,10 +120,10 @@ public class DiaryActivity3 extends AppCompatActivity {
                                     post.setImageURL(new ArrayList<String>());
                                     post.addImageURL(imageUrl.toString());
                                     db.setPostData(post);
-                                    db.updateDiaryStreak(getApplicationContext());
-
                                     if(day.equals(DateModule.getToday())){
                                         db.updateDiaryStreak(getApplicationContext());
+                                        db.uploadUserCard(0);
+                                        db.uploadUserCard(Math.abs((int) rng.MT19937_long( (int) System.currentTimeMillis()))%12 + 1);
                                     }
                                     Intent intent = new Intent(DiaryActivity3.this, MainActivity.class);
                                     startActivity(intent);
@@ -142,7 +145,11 @@ public class DiaryActivity3 extends AppCompatActivity {
                     post.setImageURL(new ArrayList<String>());
                     post.addImageURL("");
                     db.setPostData(post);
-                    db.updateDiaryStreak(getApplicationContext());
+                    if(day.equals(DateModule.getToday())){
+                        db.updateDiaryStreak(getApplicationContext());
+                        db.uploadUserCard(0);
+                        db.uploadUserCard(Math.abs((int)rng.MT19937_long( (int) System.currentTimeMillis()))%12 + 1);
+                    }
                     Intent intent = new Intent(DiaryActivity3.this, MainActivity.class);
                     startActivity(intent);
                     finish();
