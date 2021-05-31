@@ -95,6 +95,7 @@ public class DataDB {
                 if (Integer.parseInt(document.get("gauge").toString()) >= 7) {
                     ds.setGauge(ds.getGauge() - 7);
                     ds.setLastDay(DateModule.getToday());
+                    ds.setPeriod(ds.getPeriod()-1);
                     db.collection("streak").document(user.getUid()).set(ds).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void unused) {

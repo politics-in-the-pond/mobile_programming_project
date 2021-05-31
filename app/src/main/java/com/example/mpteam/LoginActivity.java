@@ -202,11 +202,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 }
             }
         });
-        finish();
-        startActivity(intent);
     }
     public void set_state(int num)
     {
+        Log.v("state3s",Integer.toString(num));
         intent.putExtra("state",num);
+        finish();
+        startActivity(intent);
     }
 }

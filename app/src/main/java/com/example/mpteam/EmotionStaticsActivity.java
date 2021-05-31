@@ -142,8 +142,6 @@ public class EmotionStaticsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_emotion_statics);
-        Intent intent = getIntent();
-        state = getIntent().getIntExtra("state",0);
         happy_day = new ArrayList<>();
         smile_day = new ArrayList<>();
         laughing_day = new ArrayList<>();
@@ -174,10 +172,10 @@ public class EmotionStaticsActivity extends AppCompatActivity {
         });
     }
     public void onBackPressed() {
+        Intent intent = new Intent();
+        intent.putExtra("state", getIntent().getIntExtra("state",0));
+        setResult(RESULT_CANCELED,intent);
         finish();
-        Intent intent =new Intent(this,MainActivity.class);
-        intent.putExtra("state",state);
-        startActivity(intent);
     }
 
 }

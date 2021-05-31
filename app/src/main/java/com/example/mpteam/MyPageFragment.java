@@ -394,8 +394,7 @@ public class MyPageFragment extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), EmotionStaticsActivity.class);
                 intent.putExtra("state",getArguments().getInt("state"));
-                getActivity().finish();
-                startActivity(intent);
+                startActivityForResult(intent,1);
             }
         });
         btn_logout.setOnClickListener(new View.OnClickListener() {

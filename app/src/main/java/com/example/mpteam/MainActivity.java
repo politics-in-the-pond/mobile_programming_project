@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -11,6 +12,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
@@ -45,11 +48,12 @@ public class MainActivity extends FragmentActivity {
     BoxFragment boxFragment;
     DiaryFragment diaryFragment;
     DiaryFragment2 diaryFragment2;
+    DiaryFragment3 diaryFragment3;
     MyPageFragment myPageFragment;
     ArrayList<Fragment> fragment_list;
     int[] menu_item_list = {R.id.mypage, R.id.diary, R.id.box};
     private ViewPager2 viewPager;
-    private FragmentStateAdapter pagerAdapter;
+    private FragmentStateAdapter pagerAdapter = new ScreenSlidePagerAdapter(this);;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,6 +62,7 @@ public class MainActivity extends FragmentActivity {
         boxFragment = new BoxFragment();
         diaryFragment = new DiaryFragment();
         diaryFragment2 = new DiaryFragment2();
+        diaryFragment3 = new DiaryFragment3();
         myPageFragment = new MyPageFragment();
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -72,17 +77,11 @@ public class MainActivity extends FragmentActivity {
         Intent intent = getIntent();
         if (getIntent() != null) {
             state = MainState.values()[intent.getIntExtra("state", 0)];
+            Log.v("state",Integer.toString(intent.getIntExtra("state",0)));
+            viewPager = findViewById(R.id.pager);
+            setFragmentlist();
+            pagerAdapter.notifyDataSetChanged();
         }
-        Log.v("state",Integer.toString(intent.getIntExtra("state",0)));
-        Bundle bundle = new Bundle(9); // 파라미터는 전달할 데이터 개수
-        int num = state == MainState.START ? 0 :  state == MainState.SUCCESS ? 1 : state == MainState.DURING_BEFORE ? 2 : 3;
-        bundle.putInt("state",num); // key , value
-        //화면에 보여지는 fragment를 추가하거나 바꿀 수 있는 객체를 만든다.
-        myPageFragment.setArguments(bundle);
-        setFragmentlist();
-
-        viewPager = findViewById(R.id.pager);
-        pagerAdapter = new ScreenSlidePagerAdapter(this);
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -132,7 +131,7 @@ public void setFragmentlist()
     else if(state==MainState.DURING_AFTER)
     {
         fragment_list.add(myPageFragment);
-        fragment_list.add(myPageFragment);
+        fragment_list.add(diaryFragment3);
         fragment_list.add(boxFragment);
     }
     else if(state==MainState.SUCCESS)
@@ -148,10 +147,11 @@ public void setFragmentlist()
         fragment_list.add(boxFragment);
     }
 }
-    public void onResume()
+    public void onStart()
     {
-        super.onResume();
+        super.onStart();
         viewPager.setAdapter(pagerAdapter);
+        pagerAdapter.notifyDataSetChanged();
         viewPager.setCurrentItem(1);
     }
     public void onBackPressed() {
@@ -164,10 +164,18 @@ public void setFragmentlist()
              if (resultCode == RESULT_OK) {
                 state=MainState.values()[data.getIntExtra("state",0)];
                 setFragmentlist();
+                pagerAdapter.notifyDataSetChanged();
                 viewPager.setCurrentItem(1);
                 Log.v("state222",Integer.toString(data.getIntExtra("state",0)));
                  UpdateDataInteger("streak", "period", data.getIntExtra("period",-1));
                  UpdateData("streak", "startDay", DateModule.getToday());
+             }
+             else if(resultCode == RESULT_CANCELED)
+             {
+                 state=MainState.values()[data.getIntExtra("state",0)];
+                 setFragmentlist();
+                 pagerAdapter.notifyDataSetChanged();
+                 viewPager.setCurrentItem(0);
              }
            } else if (requestCode == 2) {
 
@@ -181,7 +189,15 @@ public void setFragmentlist()
 
         @Override
         public Fragment createFragment(int position) {
-            return fragment_list.get(position);
+                Log.v("taggddd", Integer.toString(position));
+                Bundle bundle = new Bundle(9); // 파라미터는 전달할 데이터 개수
+                int num = state == MainState.START ? 0 : state == MainState.SUCCESS ? 1 : state == MainState.DURING_BEFORE ? 2 : 3;
+                bundle.putInt("state", num); // key , value
+                //화면에 보여지는 fragment를 추가하거나 바꿀 수 있는 객체를 만든다.
+                fragment_list.get(position).setArguments(bundle);
+                return fragment_list.get(position);
+
+
         }
 
         @Override
