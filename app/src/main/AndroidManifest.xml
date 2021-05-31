@@ -20,6 +20,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <service android:name=".modules.UnCatchTaskService"
+            android:stopWithTask="false" />
         <activity android:name=".EmotionStaticsActivity"></activity>
         <activity android:name=".LoginActivity" />
         <activity android:name=".LoginActivityResume" />

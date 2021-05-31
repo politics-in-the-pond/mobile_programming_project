@@ -40,7 +40,7 @@ public class MainActivity extends FragmentActivity {
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     private static final int NUM_PAGES = 3;
-    MainState state = MainState.START;
+    public MainState state = MainState.START;
     BottomNavigationView bottomNavigationView;
     BoxFragment boxFragment;
     DiaryFragment diaryFragment;
@@ -74,7 +74,13 @@ public class MainActivity extends FragmentActivity {
             state = MainState.values()[intent.getIntExtra("state", 0)];
         }
         Log.v("state",Integer.toString(intent.getIntExtra("state",0)));
+        Bundle bundle = new Bundle(9); // 파라미터는 전달할 데이터 개수
+        int num = state == MainState.START ? 0 :  state == MainState.SUCCESS ? 1 : state == MainState.DURING_BEFORE ? 2 : 3;
+        bundle.putInt("state",num); // key , value
+        //화면에 보여지는 fragment를 추가하거나 바꿀 수 있는 객체를 만든다.
+        myPageFragment.setArguments(bundle);
         setFragmentlist();
+
         viewPager = findViewById(R.id.pager);
         pagerAdapter = new ScreenSlidePagerAdapter(this);
 
@@ -142,9 +148,9 @@ public void setFragmentlist()
         fragment_list.add(boxFragment);
     }
 }
-    public void onStart()
+    public void onResume()
     {
-        super.onStart();
+        super.onResume();
         viewPager.setAdapter(pagerAdapter);
         viewPager.setCurrentItem(1);
     }

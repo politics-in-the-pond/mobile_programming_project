@@ -122,6 +122,7 @@ public class DiaryActivity3 extends AppCompatActivity {
                                         db.updateDiaryStreak(getApplicationContext());
                                     }
                                     Intent intent = new Intent(DiaryActivity3.this, MainActivity.class);
+                                    intent.putExtra("state",3);
                                     startActivity(intent);
                                     finish();
                                 }

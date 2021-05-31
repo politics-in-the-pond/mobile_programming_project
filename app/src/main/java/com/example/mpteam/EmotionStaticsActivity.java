@@ -1,5 +1,6 @@
 package com.example.mpteam;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -33,6 +34,7 @@ public class EmotionStaticsActivity extends AppCompatActivity {
     MaterialCalendarView materialCalendarView;
     int standardSize_X, standardSize_Y;
     float density;
+    int state;
     ArrayList<PostData> posts;
     ArrayList<CalendarDay> happy_day = new ArrayList<>();
     ArrayList<CalendarDay> smile_day = new ArrayList<>();
@@ -43,7 +45,8 @@ public class EmotionStaticsActivity extends AppCompatActivity {
     ArrayList<CalendarDay> shocked_day = new ArrayList<>();
     ArrayList<CalendarDay> angry_day = new ArrayList<>();
     ArrayList<CalendarDay> crying_day = new ArrayList<>();
-
+    FragmentTransaction transaction;
+    Fragment fragment;
     public void GetMyPosts() {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -102,7 +105,7 @@ public class EmotionStaticsActivity extends AppCompatActivity {
             }
 
         }
-        Fragment fragment = new GraphFragment(); // Fragment 생성
+        fragment = new GraphFragment(); // Fragment 생성
         Bundle bundle = new Bundle(9); // 파라미터는 전달할 데이터 개수
         bundle.putInt("happy_day", happy_day.size()); // key , value
         bundle.putInt("smile_day", smile_day.size());
@@ -115,9 +118,9 @@ public class EmotionStaticsActivity extends AppCompatActivity {
         bundle.putInt("crying_day", crying_day.size());
         //화면에 보여지는 fragment를 추가하거나 바꿀 수 있는 객체를 만든다.
         fragment.setArguments(bundle);
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction = getSupportFragmentManager().beginTransaction();
         transaction.add(R.id.graph_viewer, fragment);
-        transaction.commit();
+        transaction.commitAllowingStateLoss();
         materialCalendarView.addDecorators(
                 new SundayDecorator(),
                 new SaturdayDecorator(),
@@ -139,6 +142,8 @@ public class EmotionStaticsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_emotion_statics);
+        Intent intent = getIntent();
+        state = getIntent().getIntExtra("state",0);
         happy_day = new ArrayList<>();
         smile_day = new ArrayList<>();
         laughing_day = new ArrayList<>();
@@ -167,6 +172,12 @@ public class EmotionStaticsActivity extends AppCompatActivity {
                 String shot_Day = Year + "/" + Month + "/" + Day;
             }
         });
+    }
+    public void onBackPressed() {
+        finish();
+        Intent intent =new Intent(this,MainActivity.class);
+        intent.putExtra("state",state);
+        startActivity(intent);
     }
 
 }
